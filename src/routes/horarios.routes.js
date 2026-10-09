@@ -1,30 +1,21 @@
 import { Router } from 'express';
+import { createHorario, deleteHorario, getHorario, updateHorarioPatch, updateHorarioPut} from '../controllers/horarios.controllers.js';
 
 const router = Router();
 
 //Definicion de rutas para horarios
-router.get('/', (req, res) => {
-    res.send('Obtiene todos los horarios')
-});
+router.get('/', getHorario);
 
 //Crear un horario
-router.post('/', (req, res) => {
-    res.send('Registrar horarios')
-});
+router.post('/', createHorario);
 
 //Actualizar totalmente
-router.put('/', (req, res) => {
-    res.send('Actualizar todas las propiedades de los horarios')
-});
+router.put('/', updateHorarioPut);
 
 //Actualizar parcialmente
-router.patch('/horarios', (req, res) => {
-    res.send('Actualizar una o mas propiedades de los horarios')
-});
+router.patch('/', updateHorarioPatch);
 
 //Elimina un horario
-router.delete('/', (req, res) => {
-    res.send('Eliminar un horario')
-});
+router.delete('/', deleteHorario);
 
 export default router;
