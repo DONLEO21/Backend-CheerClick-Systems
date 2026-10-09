@@ -1,3 +1,4 @@
+//Controlador define quen hace una accion especifica
 
 const getHorario = (req, res) => {
     res.send('Obtiene todos los horarios')
