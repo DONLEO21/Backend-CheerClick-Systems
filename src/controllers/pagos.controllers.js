@@ -1,3 +1,4 @@
+//El controlador define quien hace una accion especifica
 const getPagos = (req, res) => {
     res.send('Listar todos los pagos registrados')
 }
