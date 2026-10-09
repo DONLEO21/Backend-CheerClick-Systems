@@ -1,5 +1,5 @@
 // const express = require('express'); //CommonJS
-import express, { json } from 'express';
+import express from 'express';
 import pagosRouter from './routes/pagos.routes.js'; //EsModule
 
 const app = express();

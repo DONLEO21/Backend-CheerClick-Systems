@@ -1,31 +1,21 @@
 import { Router } from 'express';
+import { createPago, deletePago, getPagos, updatePagoPut, updatePagoPatch } from '../controllers/pagos.controllers.js';
 
 const router = Router();
 
 //Obtener todos los pagos
-router.get('/', (req, res) => {
-    res.send('Listar todos los pagos registrados')
-});
+router.get('/', getPagos);
 
 //Regitrar nuevos pagos
-router.post('/', (req, res) => {
-    res.send('Registrar Pagos')
-});
+router.post('/', createPago);
 
 //Actualizar los pagos totalmente
-router.put('/', (req, res) => {
-    res.send('Actualizar todas las propiedes de los pagos')
-})
+router.put('/', updatePagoPut)
 
 //Actualizar los pagos parcialmente
-router.patch('/', (req, res) => {
-    res.send('Actualizar una o mas propiedades del los pagos')
-})
+router.patch('/', updatePagoPatch)
 
 //Eliminar pago
-router.delete('/', (req, res) => {
-    res.send('Eliminar un pago registrado')
-})
-
+router.delete('/', deletePago)
 
 export default router;
