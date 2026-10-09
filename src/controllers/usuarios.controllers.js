@@ -1,4 +1,4 @@
-
+//Controlador define quien hace una accion especifica
 const getUsuario = (req, res) => {
     res.send( 'Listar todos los usuarios')
 }
