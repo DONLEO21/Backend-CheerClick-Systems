@@ -1,10 +1,17 @@
+import { dbInsertPago } from "../services/pagos.services.js";
+
 //El controlador define quien hace una accion especifica
 const getPagos = (req, res) => {
     res.send('Listar todos los pagos registrados')
 }
 
-const createPago = (req, res)  => {
-    res.send('Registrar Pagos')
+const createPago = async (req, res)  => {
+    // Obtenemos el pago desde el cuerpo de la peticion
+    const pago = req.body;
+    const newPago = await dbInsertPago(pago); //Llega como una promesa 
+
+    //Respuesta del cliente 
+    res.json({msg :'Registrar Pagos', pago : newPago})
 }
 
 const updatePagoPut = (req, res) => {
