@@ -1,10 +1,16 @@
 import mongoose from "mongoose";
 
 // Parte 1: Definir la estructura de datos de mi Documento
-const usuarioSchema = new mongoose.Schema({
-    name: {
+const usuarioSchema = new Schema({
+
+    nombre: {
         type: String,             //Tipo de dato
         required: true,           //Regla: Es Obligatorio
+        trim: true
+    },
+    apellido: {
+        type: String,           
+        required: true,          
         trim: true
     },
     email: {
@@ -12,16 +18,25 @@ const usuarioSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    password: {
+    contrasena: {
         type: String,
         required: true,
         trim: true
+    },
+    rol: {
+        type: String,
+        enum: ['Administrador', 'Atleta', 'Entrenador'],
+        default: ['Atleta']
     }
-}, {
+}, 
+//Opciones del esquema
+{
     timestamps: true
 });
 
 // Parte 2: Definir el modelo. Dicho modelo esta atado al nombre de documento
-const usuarioModel = mongoose.model();
+const usuarioModel = mongoose.model(
+    'usuario',    //nombre de la coleccion (pluraliza automaticamente)
+    usuarioSchema);     //nombre del esquema que define la estructura de los datos
 
 export default usuarioModel;

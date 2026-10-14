@@ -1,10 +1,17 @@
 // const express = require('express'); //CommonJS
-import express from 'express';
-import usuariosRouter from './routes/usuarios.routes.js'; //EsModule
+import express from 'express';//EsModule
+import usuariosRouter from './routes/usuarios.routes.js'; //EsModule_
 import { getUsuario, createUsuario, updateUsuario, updateUsuarioP, deleteUsuario } from './controllers/usuarios.controllers.js';
-import router from './routes/usuarios.routes.js';
+import conexion from './config/mongo.config.js' //Conexion a la base de datos
+import router  from './routes/usuarios.routes.js';
 
-const app = express();
+
+const app = express();     //Instancia de express
+
+conexion();      //Ejecuta la conexion a la base de datos
+
+//Habilita a la aplicacion para intepretar JSON
+app.use(express.json());
 
 //Definiendo el primer endpoint (Ruta de entrada) 
 app.get('/health', (req, res) => {
