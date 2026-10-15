@@ -1,9 +1,10 @@
 // const express = require('express'); //CommonJS
 import express from 'express';//EsModule
-import usuariosRouter from './routes/usuarios.routes.js'; //EsModule_
-import { getUsuario, createUsuario, updateUsuario, updateUsuarioP, deleteUsuario } from './controllers/usuarios.controllers.js';
+
+import usuariosRoute from './routes/usuarios.routes.js'; //EsModule_
+import epsRoute from './routes/eps.routes.js'
+
 import conexion from './config/mongo.config.js' //Conexion a la base de datos
-import router  from './routes/usuarios.routes.js';
 
 
 const app = express();     //Instancia de express
@@ -19,14 +20,9 @@ app.get('/health', (req, res) => {
 
 });
 
-router.post('/', getUsuario)
-router.post('/',  createUsuario)
-router.post('/',  updateUsuario)
-router.post('/',  updateUsuarioP)
-router.post('/',  deleteUsuario)
-
 //Enlazar todas las rutas de la aplicacion 
-app.use( '/api/usuarios' , usuariosRouter );
+app.use( '/api/usuarios' , usuariosRoute );
+app.use( '/api/eps' ,  epsRoute)
 
 //Iniciar servidor 
 const port=3000;
