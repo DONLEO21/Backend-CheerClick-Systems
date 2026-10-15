@@ -7,11 +7,23 @@ const getHorario = (req, res) => {
 }
 
 const createHorario = async (req, res) => {
+    try {
+    // Obtenemos el horario desde el cuerpo de la peticion
     const horario = req.body;
+   
+    // Conecta con el horario servicio para crear un horario en la base de datos
+    const newHorario= await dbinsertHorario(horario); // Llega como una Promesa 
 
-    const newHorario= await dbinsertHorario(horario);
-
+    // Respuesta del horario
     res.json({ msg : 'Crear un horario', horario: newHorario})
+        
+    } catch (error) {
+        console.error(error);
+        res.json({
+            msg: 'Error al Registrar Horario'
+        });
+    }
+
 }
 
 const updateHorarioPut= (req, res) => {

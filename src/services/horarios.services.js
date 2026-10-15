@@ -5,11 +5,11 @@ import HorarioModel from "../models/horario.model.js"
 
 //TODO: Conectar el Modelo de Horarios con la base de datos
 
+const dbgetdHorario = () => {}
+
 const dbinsertHorario = async (newHorario) => {
      return await HorarioModel.create(newHorario);
 }
-
-const dbcreardHorario = () => {}
 
 const dbupdateHorario = () => {}
 
@@ -17,7 +17,7 @@ const dbdeleteHorario = () => {}
 
 export {
     dbinsertHorario,
-    dbcreardHorario,
+    dbgetdHorario,
     dbupdateHorario,
     dbdeleteHorario
 }
