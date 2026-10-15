@@ -1,10 +1,27 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const EpsShema = new mongoose.Schema({
-    nombre: {
-        
-    }
-});
+//Definir la estructura coleccion
+const EpsSchema = new Schema(
+    //Definir la estructura de datos
+    {
+        nombre: {
+            type: String,
+            unique: true,
+            enum: ['Sanitas', 'Famisanar', 'Nueva EPS'],
+            default: 'Famisanar'
+        }
+    },
+    //Configuraciones de la estructura  datos
+    {}
+    
+);
+
+//Definir modelo a partir de la estructura del documento
+const EpsModel = model(
+    'eps',   //Nombre de la coleccion donde se guardaran los documentos de tipo eps
+    EpsSchema   //Schema (structura de datos) que se guardara en coleccion
+);
 
 
-const EpsModel = mongoose.model('Eps', EpsModel);
+//Exportar el modelo para que pueda ser usado por los servicios
+export default EpsModel;

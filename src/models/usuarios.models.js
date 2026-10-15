@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
 // Parte 1: Definir la estructura de datos de mi Documento
 const usuarioSchema = new Schema({
@@ -26,7 +26,7 @@ const usuarioSchema = new Schema({
     rol: {
         type: String,
         enum: ['Administrador', 'Atleta', 'Entrenador'],
-        default: ['Atleta']
+        default: 'Atleta'
     }
 }, 
 //Opciones del esquema
@@ -35,7 +35,7 @@ const usuarioSchema = new Schema({
 });
 
 // Parte 2: Definir el modelo. Dicho modelo esta atado al nombre de documento
-const usuarioModel = mongoose.model(
+const usuarioModel = model(
     'usuario',    //nombre de la coleccion (pluraliza automaticamente)
     usuarioSchema);     //nombre del esquema que define la estructura de los datos
 
