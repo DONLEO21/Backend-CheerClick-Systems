@@ -27,7 +27,8 @@ const MensualidadSchema = new Schema(
         },
   //Configuraciones de la estructura de datos 
 {
-
+    timestamps : true,
+    versionKey:  false //Elimina la propiedad de versionamiento del Schema 
 
 });
 //Definir el model a partir de la estructura del documento

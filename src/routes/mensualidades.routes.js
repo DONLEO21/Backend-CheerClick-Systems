@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CreateMensualidad } from "../controllers/mensualidades.controllers.js";
+import { CreateMensualidad, GetMensualidad } from "../controllers/mensualidades.controllers.js";
 
 
 
@@ -9,7 +9,7 @@ const router = Router(); //Crear una instancia de las rutas de express
 
 router.post('/', CreateMensualidad);
 
-// router.get('/', );
+router.get('/', GetMensualidad);
 
 // router.put('/', )
 
