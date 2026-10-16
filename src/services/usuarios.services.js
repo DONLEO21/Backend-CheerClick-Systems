@@ -8,7 +8,9 @@ const dbCreateUsuario = async ( newUsuario ) => {
     return await usuarioModel.create(newUsuario);
 }
 
-const dbGetUsuario = () => {}
+const dbGetUsuario = async (id) => {
+    return await dbGetUsuario.findById(id)
+}
 
 const dbUpdateUsuario = () => {}
 

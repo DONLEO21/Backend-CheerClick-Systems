@@ -1,4 +1,4 @@
-import { dbCreateEps, dbDeleteEps, dbGetEps } from "../services/eps.services.js";
+import { dbCreateEps, dbDeleteEps, dbGetEps, dbUpdateEps } from "../services/eps.services.js";
 
 const createEps = async (req, res) => {
     try {
@@ -17,27 +17,67 @@ const createEps = async (req, res) => {
 }
 
 const getEps = async (req, res) => {
-    const data =  await dbGetEps();
+    try {
+        const data =  await dbGetEps();
 
-    res.json({
-        msg: 'Lista de EPS',
-        data: data
-    })
+        res.json({
+            msg: 'Lista de EPS',
+            data: data
+        })
+    }
+    catch ( error ) {
+        console.error(error);
+
+        res.json({
+            msg: 'No se ha podido listar las eps'
+        })
+    }
 }
 
 const deleteEps = async (req, res) =>{
-    const id = req.params.id;
+    try {
+        const id = req.params.id;
 
-    const data = await dbDeleteEps(id);
+        const data = await dbDeleteEps(id);
 
-    res.json ({
-        msg : 'Elimine una EPS',
-        data : data
-    });
+        res.json ({
+            msg : 'Elimine una EPS',
+            data : data
+        });
+    }
+    catch ( error ) {
+        console.error(error);
+
+        res.json({
+            msg: 'No se ha podido eliminar la eps'
+        })
+    }
+}
+
+const updateEps = async (req, res) => {
+    try {
+        const id =  req.params.id;
+        const inputData = req.body;
+    
+        const data = await dbUpdateEps(id, inputData);
+
+        res.json({
+            msg: 'Categoria Actualizada',
+            data: data
+        });
+    }
+    catch ( error ){
+        console.error(error);
+
+        res.json({
+            msg: 'No se ha podido actualizar la eps'
+        })
+    }
 }
 
 export {
     createEps, 
     getEps,
-    deleteEps
+    deleteEps,
+    updateEps
 }
