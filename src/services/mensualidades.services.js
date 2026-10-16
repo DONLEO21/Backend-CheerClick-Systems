@@ -5,10 +5,16 @@ const dbCreateMensualidad = async ( newMensualidad ) => {
 }
 
 const dbGetMensualidad = async () => {
-    return await MensualidadModel.find({});  //Consultar todas las mensualidades registradas 
+    return await MensualidadModel.find();  //Consultar todas las mensualidades registradas 
 } 
+
+const dbDeleteMensualidad = async ( id ) => {
+    // return await MensualidadModel.findByIdAndDelete( id )
+    return await MensualidadModel.findOneAndDelete({ _id: id}) 
+}
 
 export{
     dbCreateMensualidad,
-    dbGetMensualidad
+    dbGetMensualidad,
+    dbDeleteMensualidad
 }

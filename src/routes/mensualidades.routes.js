@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CreateMensualidad, GetMensualidad } from "../controllers/mensualidades.controllers.js";
+import { CreateMensualidad, DeleteMensualidad, GetMensualidad } from "../controllers/mensualidades.controllers.js";
 
 
 
@@ -15,7 +15,7 @@ router.get('/', GetMensualidad);
 
 // router.patch('/', )
 
-// router.delete('/', )
+router.delete('/:id', DeleteMensualidad )
 
 //Exportar las rutas definidas de este archivo
 
