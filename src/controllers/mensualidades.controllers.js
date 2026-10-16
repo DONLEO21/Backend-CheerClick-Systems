@@ -1,4 +1,4 @@
-import { dbCreateMensualidad, dbDeleteMensualidad, dbGetMensualidad } from "../services/mensualidades.services.js";
+import { dbCreateMensualidad, dbDeleteMensualidad, dbGetMensualidad, dbGetMensualidades, dbUpdateMensualidad } from "../services/mensualidades.services.js";
 
 //Constrotaldor para crear una nueva mensualidad 
 const CreateMensualidad = async (req , res) => {
@@ -29,6 +29,7 @@ const GetMensualidad = async (req, res ) => {
     }
 };
 
+//Controlador para eliminar una de las mensualidades
 const DeleteMensualidad = async (req, res) => {
     try {
         const id = req.params.id;
@@ -42,8 +43,39 @@ const DeleteMensualidad = async (req, res) => {
     }
 }
 
+//Controlador para actualizar los campos de la mensualidad
+const UpdateMensualidad = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const inputData = req.body;
+
+        const data = await dbUpdateMensualidad(id, inputData);
+
+        res.json({ msg : 'Actualizar los campos de la mensualidad ', data: data });
+    } catch (error) {
+        console.error(error);
+        res.json({ msg : 'No se puedo actualizar los campos de la mensualidad'})
+        
+    }
+}
+
+const GetMensualidades = async (req, res) => {
+    try {
+        const id = req.params.id; 
+        const data = await dbGetMensualidades (id);
+
+        res.json({msg: 'Consultar una de las mesualidades por su ID', data: data});
+    } catch (error) {
+        console.error(error);
+        res.json({msg : 'No se pudo encontrar la mensualidad'});
+    }
+}
+
+
 export {
     CreateMensualidad,
     GetMensualidad,
-    DeleteMensualidad
+    DeleteMensualidad,
+    UpdateMensualidad,
+    GetMensualidades
 }
