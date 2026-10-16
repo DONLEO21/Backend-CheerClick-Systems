@@ -3,14 +3,13 @@
 
 import mongoose from "mongoose";
 
-//const URI_LOCAL = ''//
-const URL_REMOTE = 'mongodb+srv://Amy:Amy220608.@cluster0.rzabsbq.mongodb.net/'
+ const URI_MONGO = process.env.URI_MONGO || 'mongodb://localhost:27017/db-CheerClick'
 
 //sequialize (SQL)
 //Prisma (SQL, NO SQL)
 const conexion = async () => {
     try {
-        await mongoose.connect(URL_REMOTE)
+        await mongoose.connect(URI_MONGO)
         console.log('Conectado a la base de datos MongoDB')
     } catch (error) {
         console.error('Error al conectar a la base de datos', error)

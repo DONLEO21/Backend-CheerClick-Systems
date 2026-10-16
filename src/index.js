@@ -6,6 +6,8 @@ import epsRoute from './routes/eps.routes.js'
 
 import conexion from './config/mongo.config.js' //Conexion a la base de datos
 
+//Iniciar servidor 
+const port= process.env.PORT || 3001;
 
 const app = express();     //Instancia de express
 
@@ -24,8 +26,6 @@ app.get('/health', (req, res) => {
 app.use( '/api/usuarios' , usuariosRoute );
 app.use( '/api/eps' ,  epsRoute)
 
-//Iniciar servidor 
-const port=3000;
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
