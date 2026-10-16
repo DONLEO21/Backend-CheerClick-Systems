@@ -6,7 +6,7 @@ import conexion from './config/mongo.config.js';
 import horariosRoute from './routes/horarios.routes.js';
 import plantilla_horariosRoute from './routes/plantilla_horarios.routes.js'
 
-
+const port = process.env.PORT || 3001;
 
 const app = express();    // Instancia de Express
 
@@ -28,7 +28,6 @@ app.use('/api/plantilla_horario', plantilla_horariosRoute)
 
 
 // Iniciar Servidor
-const port = 3000;
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
