@@ -8,7 +8,15 @@ const dbGetPlantilla_horario = async () => {
    return await Plantilla_horarioModel.find();     // Consultar todas las plantillas de horarios
 }
 
+const dbDeletePlantilla_horario = async (id) => {
+    //   return await Plantilla_horarioModel.findByIdAndDelete(id);
+
+    return await Plantilla_horarioModel.findOneAndDelete({ _id: id});
+
+}
+
 export {
     dbCreatePlantilla_horario,
-    dbGetPlantilla_horario
+    dbGetPlantilla_horario,
+    dbDeletePlantilla_horario
 }

@@ -1,4 +1,4 @@
-import { dbCreatePlantilla_horario, dbGetPlantilla_horario } from "../services/plantilla_horarios.services.js";
+import { dbCreatePlantilla_horario, dbDeletePlantilla_horario, dbGetPlantilla_horario } from "../services/plantilla_horarios.services.js";
 
 const createPlantillahorario = async (req, res) => {
     try {
@@ -29,7 +29,23 @@ const getPlantillahorario = async (req, res) => {
     }
 }
 
+const deletePlantillahorario = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const data =  await dbDeletePlantilla_horario(id);
+
+        res.json({ msg : 'Elimina una plantilla de horarios', data: data });
+        
+    } catch (error) {
+        console.error(error);
+        res.json({msg: "No se puede eliminar las plantillas de horarios"})
+    }
+
+}
+
 export {
     createPlantillahorario,
-    getPlantillahorario
+    getPlantillahorario,
+    deletePlantillahorario
 }
