@@ -5,6 +5,8 @@ import conexion from './config/mongo.config.js'; //Importar la connexion a la ba
 import pagosRouter from './routes/pagos.routes.js'; //EsModule
 import mensualidadRouter from './routes/mensualidades.routes.js'
 
+const port= process.env.PORT || 3001;
+
 const app = express(); //Instacia de express
 conexion(); // Ejecuta la conexion de la base de datos 
 
@@ -22,7 +24,6 @@ app.use( '/api/pagos' , pagosRouter );
 app.use( '/api/mensualidades', mensualidadRouter);
 
 //Iniciar servidor 
-const port=3000;
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
