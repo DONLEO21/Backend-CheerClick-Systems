@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { createEps, getEps } from "../controllers/eps.controllers.js";
+import { createEps, deleteEps, getEps } from "../controllers/eps.controllers.js";
 
-const router = Router(); //Crea una instancia de las rutas de express
+const router = Router(); 
 
-//Define las rutas paa las eps
-router.post( '/', createEps);
-router.get ('/', getEps);
+// Define las rutas para las eps
+router.post('/', createEps);
+router.get('/', getEps);
+router.delete('/:id', deleteEps);
 
-//Exportar las rutas definidas en este archivo
+// Exportar las rutas definidas en este archivo
 export default router;

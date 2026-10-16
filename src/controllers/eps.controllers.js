@@ -1,4 +1,4 @@
-import { dbCreateEps, dbGetEps } from "../services/eps.services.js";
+import { dbCreateEps, dbDeleteEps, dbGetEps } from "../services/eps.services.js";
 
 const createEps = async (req, res) => {
     try {
@@ -25,7 +25,19 @@ const getEps = async (req, res) => {
     })
 }
 
+const deleteEps = async (req, res) =>{
+    const id = req.params.id;
+
+    const data = await dbDeleteEps(id);
+
+    res.json ({
+        msg : 'Elimine una EPS',
+        data : data
+    });
+}
+
 export {
     createEps, 
-    getEps
+    getEps,
+    deleteEps
 }
