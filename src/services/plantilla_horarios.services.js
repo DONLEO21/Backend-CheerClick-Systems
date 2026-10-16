@@ -15,8 +15,29 @@ const dbDeletePlantilla_horario = async (id) => {
 
 }
 
+const dbUpdatePlantilla_horario = async (id, plantilla_horarioUpdate) => {
+    // return await Plantilla_horarioModel.findByIdAndUpdate(
+    //     id,                           // El ID del Documento que deseamos actualizar 
+    //     plantilla_horarioUpdate,       // EL objeto con los datos del Documento que deseamos actualizar 
+    //     {new: true}
+
+       return await Plantilla_horarioModel.findOneAndUpdate(
+        { _id: id} ,                           // El ID del Documento que deseamos actualizar 
+        plantilla_horarioUpdate,       // EL objeto con los datos del Documento que deseamos actualizar 
+        {new: true}
+    );
+}
+
+const dbGetPlantilla_horarios = async (id) => {
+    // return await Plantilla_horarioModel.findById(id);
+    
+    return await Plantilla_horarioModel.findOne({ _id: id})
+}
+
 export {
     dbCreatePlantilla_horario,
     dbGetPlantilla_horario,
-    dbDeletePlantilla_horario
+    dbDeletePlantilla_horario,
+    dbUpdatePlantilla_horario,
+    dbGetPlantilla_horarios
 }

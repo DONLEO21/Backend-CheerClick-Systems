@@ -26,6 +26,7 @@ app.use('/api/horarios', horariosRoute);
 app.use('/api/plantilla_horario', plantilla_horariosRoute)
 
 
+
 // Iniciar Servidor
 const port = 3000;
 app.listen(port, () => {

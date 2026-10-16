@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createPlantillahorario, deletePlantillahorario, getPlantillahorario } from "../controllers/plantilla_horarios.controllers.js";
+import { createPlantillahorario, deletePlantillahorario, getPlantillahorario, getPlantillahorarios, updatePlantillahorario } from "../controllers/plantilla_horarios.controllers.js";
 
 const router = Router(); // Crear una instancia de las rutas de express
 
@@ -10,8 +10,9 @@ const router = Router(); // Crear una instancia de las rutas de express
 router.get('/', getPlantillahorario);
 router.post('/', createPlantillahorario);
 // router.put('/', updatePlantillahorarioPut);
-// router.patch('/', updatePlantillahorarioPatch);
+router.patch('/:id', updatePlantillahorario);
 router.delete('/:id', deletePlantillahorario);
+router.get('/:id',getPlantillahorarios )
 
 // Exportar las rutas definidas en este archivo
 export default router;

@@ -1,4 +1,4 @@
-import { dbCreatePlantilla_horario, dbDeletePlantilla_horario, dbGetPlantilla_horario } from "../services/plantilla_horarios.services.js";
+import { dbCreatePlantilla_horario, dbDeletePlantilla_horario, dbGetPlantilla_horario, dbGetPlantilla_horarios, dbUpdatePlantilla_horario } from "../services/plantilla_horarios.services.js";
 
 const createPlantillahorario = async (req, res) => {
     try {
@@ -44,8 +44,41 @@ const deletePlantillahorario = async (req, res) => {
 
 }
 
+const updatePlantillahorario= async (req, res) => {
+    try {
+        const id = req.params.id;
+        const inputData = req.body
+
+        const data = await dbUpdatePlantilla_horario(id, inputData);
+
+        res.json({ msg : 'Actualiza una plantilla de horarios', data: data });
+        
+    } catch (error) {
+        console.error(error);
+        res.json({msg: "No se puede actualizar las plantillas de horarios"})
+    }
+
+}
+
+const getPlantillahorarios = async (req, res) => {
+    try {
+        const id = req.params.id
+
+        const data = await dbGetPlantilla_horarios(id);
+
+        res.json({msg : 'Obtiene una plantilla de horario', data: data})
+        
+    } catch (error) {
+        console.error(error);
+        res.json({msg: "No se puede obtener una plantilla de horario"})
+    }
+
+}
+
 export {
     createPlantillahorario,
     getPlantillahorario,
-    deletePlantillahorario
+    deletePlantillahorario,
+    updatePlantillahorario,
+    getPlantillahorarios
 }
