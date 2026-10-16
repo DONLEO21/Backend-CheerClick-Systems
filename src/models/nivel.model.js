@@ -20,7 +20,8 @@ const NivelSchema = new Schema({
         required: true,
         default: 'Activo'
     }
-}, {
+}, 
+{
     timestamps: true,
     versionKey: false
 });

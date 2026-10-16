@@ -1,4 +1,4 @@
-import { dbCreatePlantilla_horario } from "../services/plantilla_horarios.services.js";
+import { dbCreatePlantilla_horario, dbGetPlantilla_horario } from "../services/plantilla_horarios.services.js";
 
 const createPlantillahorario = async (req, res) => {
     try {
@@ -15,6 +15,21 @@ const createPlantillahorario = async (req, res) => {
     }
 }
 
+const getPlantillahorario = async (req, res) => {
+    try {
+        const inputData=req.body;
+
+        const data = await dbGetPlantilla_horario(inputData);
+
+        res.json({msg: 'Consulta las plantillas de horarios', data : data});
+        
+    } catch (error) {
+        console.error(error);
+        res.json({msg: "No se pudo consultar las plantillas de horarios"})
+    }
+}
+
 export {
-    createPlantillahorario
+    createPlantillahorario,
+    getPlantillahorario
 }

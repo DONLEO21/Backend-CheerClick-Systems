@@ -27,7 +27,10 @@ const Plantilla_horarioSchema = new Schema(
         }
     },
     //Configuraciones de la estructura de datos 
-    {} );
+    {
+        timestamps: true,                 // Agrega los campos CreateAt, updateAt automaticamente (los actualiza automaticamente)
+        versionKey: false                // Elimina la propiedad de versionamiento __v del Schema
+    } );
 
 
 // Definir el modelo a partir de la estructura del documento

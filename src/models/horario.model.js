@@ -57,6 +57,10 @@ const HorarioSchema = new Schema({
     //     ref: 'Nivel', 
     //     required: true
     // }
+},
+{
+    timestamps: true,                 // Agrega los campos CreateAt, updateAt automaticamente (los actualiza automaticamente)
+    versionKey: false                // Elimina la propiedad de versionamiento __v del Schema
 });
 
 //Parte 2: Definir el modelo. Dicho modelo esta atado al nombre del documento
