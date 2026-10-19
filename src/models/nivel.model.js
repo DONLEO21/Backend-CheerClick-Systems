@@ -4,6 +4,7 @@ const NivelSchema = new Schema({
     nombre : {
         type: String,
         required: [true, 'El nombre del nivel es obligatorio'],
+        trim: true
     },
     diasEntreno: {
         type: Number, // Equivalente a TINYINT en bases de datos relacionales
