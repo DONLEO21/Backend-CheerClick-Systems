@@ -34,7 +34,7 @@ const getEps = async (req, res) => {
     }
 }
 
-const deleteEps = async (req, res) =>{
+const deleteEps = async (req, res) => {
     try {
         const id = req.params.id;
 
@@ -62,7 +62,7 @@ const updateEps = async (req, res) => {
         const data = await dbUpdateEps(id, inputData);
 
         res.json({
-            msg: 'Categoria Actualizada',
+            msg: 'Eps Actualizada',
             data: data
         });
     }
