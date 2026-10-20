@@ -1,6 +1,5 @@
-import {Schema, model} from "mongoose";
+import { Schema, model } from "mongoose";
 
-// Parte 1: Definir la estructura de datos de mi Documento
 const HorarioSchema = new Schema({
     fecha: {
         type: Date,
@@ -38,37 +37,40 @@ const HorarioSchema = new Schema({
     franjaInicio: {
         type: String,
         required: true,
-        match: /^([01]\d|2[0-3]):([0-5]\d)$/
+        match: /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/
     },
     franjaFin: {
         type: String,
         required: true,
-        match: /^([01]\d|2[0-3]):([0-5]\d)$/,
+        match: /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/,
         validate: {
-            validator: function (valor) {
-                return valor > this.franjaInicio;
+            validator: function (valorFin) {
+                const toMinutes = (timeStr) => {
+                    if (!timeStr) return 0;
+                    const [h, m] = timeStr.split(':').map(Number);
+                    return (h * 60) + m;
+                };
+
+                const horaInicio = this.franjaInicio || (this.getUpdate ? this.getUpdate().$set?.franjaInicio : null);
+
+                if (!horaInicio) return true; 
+
+                return toMinutes(valorFin) > toMinutes(horaInicio);
             },
             message: 'La hora fin debe ser posterior a la hora inicio'
         }
     },
-    // Relación con el modelo Nivel usando su archivo correspondiente
-    // nivel: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Nivel', 
-    //     required: true
-    // }
+    nivel: {
+        type: Schema.Types.ObjectId,
+        ref: 'Nivel',
+        required: true
+    }
 },
 {
-    timestamps: true,                 // Agrega los campos CreateAt, updateAt automaticamente (los actualiza automaticamente)
-    versionKey: false                // Elimina la propiedad de versionamiento __v del Schema
+    timestamps: true,
+    versionKey: false
 });
 
-//Parte 2: Definir el modelo. Dicho modelo esta atado al nombre del documento
-const HorarioModel= model(
-    'Horario',         // Nombre de la coleccion (pluraliza automaticamente)
-    HorarioSchema      // Nombre del esquema que define la estructura de los documentos
-);
-
+const HorarioModel = model('Horario', HorarioSchema);
 
 export default HorarioModel;
-

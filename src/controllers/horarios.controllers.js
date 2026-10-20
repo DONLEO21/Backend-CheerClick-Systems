@@ -1,45 +1,85 @@
 //Controlador define quien hace una accion especifica
 
-import { dbinsertHorario } from "../services/horarios.services.js";
+import { dbCreateHorario, dbdeleteHorario, dbgetdHorario, dbGetHorarios, dbupdateHorario} from "../services/horarios.services.js";
 
-const getHorario = (req, res) => {
-    res.send('Obtiene todos los horarios')
+const getHorario = async (req, res) => {
+    try {
+        const inputData=req.body;
+
+        const data = await dbgetdHorario(inputData);
+
+        res.json({msg: 'Consulte los horarios', data : data})
+        
+    } catch (error) {
+        console.error(error);
+        res.json({msg: 'No se pudo consultar los horarios'})  
+    }
 }
 
 const createHorario = async (req, res) => {
     try {
-    // Obtenemos el horario desde el cuerpo de la peticion
-    const horario = req.body;
-   
-    // Conecta con el horario servicio para crear un horario en la base de datos
-    const newHorario= await dbinsertHorario(horario); // Llega como una Promesa 
+        const inputData = req.body;
 
-    // Respuesta del horario
-    res.json({ msg : 'Crear un horario', horario: newHorario})
+        const data = await dbCreateHorario(inputData);
+
+        res.json({msg : 'Registre un horario', data: data})
         
     } catch (error) {
         console.error(error);
-        res.json({
-            msg: 'Error al Registrar Horario'
-        });
+        res.json({msg: 'No se pudo registrar un horario'})
+        
+    }
+}
+
+const updateHorario = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const inputData=req.body
+
+        const data = await dbupdateHorario(id, inputData);
+
+        res.json({msg: 'Actualiza un horario', data: data});
+        
+    } catch (error) {
+        console.error(error);
+        res.json({msg: 'No se pudo actualizar un horario'})
+        
+    }
+}
+
+const deleteHorario = async  (req, res) => {
+    try {
+        const id= req.params.id;
+
+        const data = await dbdeleteHorario(id);
+
+        res.json({msg: 'Elimine un horario', data: data});
+        
+    } catch (error) {
+        console.error(error);
+        res.json({msg: 'No se pudo eliminar un horario'})
+        
+    }
+}
+
+const getHorarios = async (req, res) => {
+    try {
+    const id = req.params.id
+    const data = await dbGetHorarios(id);
+
+    res.json({msg: 'Obtiene un horario', data: data})
+        
+    } catch (error) {
+        console.error(error);
+        res.json({msg : 'No se puede obtener un horario'})
     }
 
 }
 
-const updateHorarioPut= (req, res) => {
-    res.json({ msg : 'Actualizar todas las propiedades de los horarios'})
-}
-const updateHorarioPatch = (req, res) => {
-    res.json({ msg : 'Actualizar uno o mas propiedades de los horarios'})
-}
-
-const deleteHorario =  (req, res) => {
-    res.json({ msg : 'Eliminar un horario'})
-}
 export {
     getHorario,
     createHorario,
-    updateHorarioPut,
-    updateHorarioPatch,
-    deleteHorario
+    updateHorario,
+    deleteHorario,
+    getHorarios
 }

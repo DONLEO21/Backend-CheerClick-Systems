@@ -5,7 +5,7 @@ const dbCreateNivel = async (newNivel) => {
 }
 
 const dbGetNivel = async () => {
-    return await NivelModel.find();
+    return await NivelModel.find().populate('nivel');
 }
 
 const dbUpdateNivel= async (id, nivelUpdate) => {

@@ -24,6 +24,11 @@ const Plantilla_horarioSchema = new Schema(
                 },
                 message: 'La hora fin debe ser posterior a la hora inicio'
             }
+        },
+         nivel: {
+            type: Schema.Types.ObjectId,
+            ref: 'Nivel',
+            required: true
         }
     },
     //Configuraciones de la estructura de datos 

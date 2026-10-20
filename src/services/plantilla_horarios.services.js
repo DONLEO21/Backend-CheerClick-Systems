@@ -5,7 +5,7 @@ const dbCreatePlantilla_horario = async (newPlantilla_horario) => {
 }
 
 const dbGetPlantilla_horario = async () => {
-   return await Plantilla_horarioModel.find();     // Consultar todas las plantillas de horarios
+   return await Plantilla_horarioModel.find().populate('nivel');     // Consultar todas las plantillas de horarios
 }
 
 const dbDeletePlantilla_horario = async (id) => {
@@ -31,7 +31,7 @@ const dbUpdatePlantilla_horario = async (id, plantilla_horarioUpdate) => {
 const dbGetPlantilla_horarios = async (id) => {
     // return await Plantilla_horarioModel.findById(id);
     
-    return await Plantilla_horarioModel.findOne({ _id: id})
+    return await Plantilla_horarioModel.findOne({ _id: id}).populate('nivel');
 }
 
 export {
