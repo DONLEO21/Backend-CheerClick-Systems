@@ -33,6 +33,8 @@ const createUsuario = async (req, res) => {
     }
     catch (error) {
     console.error( error );
+
+    
         res.send( 'Error al registrar usuario' )
     }
 }
