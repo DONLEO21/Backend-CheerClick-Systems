@@ -27,6 +27,16 @@ const usuarioSchema = new Schema({
         type: String,
         enum: ['Administrador', 'Atleta', 'Entrenador'],
         default: 'Atleta'
+    },
+    createdBy : {
+        type : Schema.Types.ObjectId,
+        ref : 'usuario',
+        required: false 
+    },
+    eps : {
+        type : Schema.Types.ObjectId,
+        ref : 'eps',
+        required: true
     }
 }, 
 //Opciones del esquema

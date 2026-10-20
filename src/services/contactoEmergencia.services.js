@@ -6,7 +6,7 @@ const dbCreateContactoE = async ( newContactoE ) => {
 }
 
 const dbGetContactoE = async () => {
-    return await contactoEModel.find(); //Consultar todas las eps registradas
+    return await contactoEModel.find().populate('usuario'); //Consultar todas las eps registradas
 }
 
 const dbDeleteContactoE = async (id) => {
