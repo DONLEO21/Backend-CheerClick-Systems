@@ -5,7 +5,7 @@ const dbCreatePlanAsociado = async (newPlanAsociado) => {
 }
 
 const dbGetPlanAsociado = async () => {
-    return await PlanAsociadoModel.find()
+    return await PlanAsociadoModel.find();
 }
 
 const dbDeletePlanAsociado = async (id) => {

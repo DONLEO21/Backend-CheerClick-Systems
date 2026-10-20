@@ -4,7 +4,7 @@ import PagosModel from "../models/pagos.model.js"
 
 // TODO: Conectar el modelo de pagos con la Base de datos 
 const dbReadPagos = async () => {
-    return await PagosModel.find();
+    return await PagosModel.find().populate('metodoPago');
 }
 
 const dbInsertPago = async (newPago) => {

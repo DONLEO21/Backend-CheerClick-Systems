@@ -34,6 +34,11 @@ const PagosSchema = new Schema(
         trim: true,
         maxlength: 100
     },
+    metodoPago : {
+        type: Schema.Types.ObjectId,
+        ref : 'metodoPago',
+        required: true
+    }
     // metodoPago : {
     //     type: Schema.Types.ObjectId,
     //     ref: 'metodoPago',

@@ -23,7 +23,12 @@ const MensualidadSchema = new Schema(
             required: true,
             trim: true,
             minlenght: 5
-            }
+        },
+        planAsociado: {
+            type:Schema.Types.ObjectId,
+            ref: 'planAsociado',
+            required:true
+        }
         },
   //Configuraciones de la estructura de datos 
 {
