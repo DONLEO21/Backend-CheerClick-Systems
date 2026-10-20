@@ -4,6 +4,7 @@ import express from 'express';
 import conexion from './config/mongo.config.js'; //Importar la connexion a la base de datos
 import pagosRouter from './routes/pagos.routes.js'; //EsModule
 import mensualidadRouter from './routes/mensualidades.routes.js'
+import PlanAsociadoRouter from './routes/planAsociado.routes.js';
 
 const port= process.env.PORT || 3001;
 
@@ -22,6 +23,7 @@ app.get('/health', (req, res) => {
 //Enlazar todas las rutas de la aplicacion 
 app.use( '/api/pagos' , pagosRouter );
 app.use( '/api/mensualidades', mensualidadRouter);
+app.use( '/api/plan-asociado', PlanAsociadoRouter);
 
 //Iniciar servidor 
 app.listen(port, () => {

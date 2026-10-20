@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createPago, deletePago, getPagos, updatePagoPut, updatePagoPatch } from '../controllers/pagos.controllers.js';
+import { createPago, deletePago, getPagos, updatePagoPatch } from '../controllers/pagos.controllers.js';
 
 const router = Router();
 
@@ -9,13 +9,10 @@ router.get('/', getPagos);
 //Regitrar nuevos pagos
 router.post('/', createPago);
 
-//Actualizar los pagos totalmente
-router.put('/', updatePagoPut)
-
 //Actualizar los pagos parcialmente
-router.patch('/', updatePagoPatch)
+router.patch('/:id', updatePagoPatch)
 
 //Eliminar pago
-router.delete('/', deletePago)
+router.delete('/:id', deletePago)
 
 export default router;

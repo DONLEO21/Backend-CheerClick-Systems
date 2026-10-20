@@ -13,7 +13,7 @@ const dbDeleteMensualidad = async ( id ) => {
     return await MensualidadModel.findOneAndDelete({ _id: id}) 
 }
 
-const dbUpdateMensualidad = async ( id, mensualidadUpdate ,  ) => {
+const dbUpdateMensualidad = async ( id, mensualidadUpdate) => {
     // return await MensualidadModel.findByIdAndUpdate( 
     //     id, //El ID que se desea actualizar
     //     mensualidadUpdate,  //El objeto con los datos del documento que se desea actualizar

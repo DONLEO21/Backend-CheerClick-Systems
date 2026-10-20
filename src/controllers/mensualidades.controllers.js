@@ -39,7 +39,7 @@ const DeleteMensualidad = async (req, res) => {
         res.json({msg: 'Elimina una de las mensualidades', data: data });
     } catch (error) {
         console.error(error);
-        res.json({msg :'No se puedo eliminar la mensualidad '})  
+        res.json({msg :'No se pudo eliminar la mensualidad '})  
     }
 }
 
