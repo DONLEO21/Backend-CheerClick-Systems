@@ -5,22 +5,22 @@ const usuarioSchema = new Schema({
 
     nombre: {
         type: String,             //Tipo de dato
-        required: true,           //Regla: Es Obligatorio
+        required: [true, 'El nombre es obligatorio'],           //Regla: Es Obligatorio
         trim: true
     },
     apellido: {
         type: String,           
-        required: true,          
+        required: [true, 'El apellido es obligatorio'],          
         trim: true
     },
     email: {
         type: String,
-        required: true,
+        required: [true, 'El correo es obligatorio'],
         trim: true
     },
     contrasena: {
         type: String,
-        required: true,
+        required: [true, 'La contraseña es obligatorio'],
         trim: true
     },
     rol: {
@@ -36,7 +36,7 @@ const usuarioSchema = new Schema({
     eps : {
         type : Schema.Types.ObjectId,
         ref : 'eps',
-        required: true
+        required: [true, 'La EPS es obligatoria']
     }
 }, 
 //Opciones del esquema

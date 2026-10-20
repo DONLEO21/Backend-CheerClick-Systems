@@ -10,9 +10,20 @@ const createEps = async (req, res) => {
     res.json({ msg: 'Registrar eps', data: data})
     }
     catch (error){
-        console.error(error)
+        console.error(error);
 
-        res.send('No se pudo registrar la EPS')
+        if(error.name == 'ValidationError'){
+            const errors ={};
+
+            //Iterar los erores para estraer el nombre de la propiedad y el error
+            for(const field in error.errors) {
+                errors[field] = error.errors[field].message;
+            }
+            
+            res.json({errors})     //Retorna un error especifico
+ 
+        } 
+        res.json({ msg :'No se pudo registrar la EPS'})    //Retorna un error generico 
     }
 }
 

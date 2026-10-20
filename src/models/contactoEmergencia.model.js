@@ -3,28 +3,28 @@ import { Schema, model} from "mongoose";
 const contactoEmergenciaSchema =new Schema({
     parentesco: {
         type: String,
-        unique: true,
+        unique: [true, 'El parentesco debe ser unico'],
         enum: ["Madre", "Padre", "Tutor", "Cónyuge", "Otro"],
         default: "Madre",
     },
     nombre: {
         type: String,            
-        required: true,         
+        required: [true, 'El nombre es obligatorio'],         
         trim: true
     },
     apellido: {
         type: String,           
-        required: true,          
+        required: [true, 'El apellido es obligatorio'],          
         trim: true
     },
     telefono: {
         type: String,           
-        required: true,          
+        required: [true, 'El telefono es obligatorio'],          
         trim: true
     },
     principal: {
         type: Boolean,
-        required: true
+        required: [true, 'Es obligatorio']
     },
     createdBy: {
         type: Schema.Types.ObjectId,
