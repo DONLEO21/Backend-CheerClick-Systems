@@ -9,7 +9,7 @@ const dbCreateUsuario = async ( newUsuario ) => {
 }
 
 const dbGetUsuario = async (id) => {
-    return await dbGetUsuario.findById(id)
+    return await dbGetUsuario.findById(id).populate('eps')
 }
 
 const dbUpdateUsuario = () => {}

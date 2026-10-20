@@ -25,6 +25,11 @@ const contactoEmergenciaSchema =new Schema({
     principal: {
         type: Boolean,
         required: true
+    },
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'usuario',
+        default: null
     }
 
 },{});
