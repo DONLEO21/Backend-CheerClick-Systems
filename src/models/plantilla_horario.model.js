@@ -12,7 +12,7 @@ const Plantilla_horarioSchema = new Schema(
         horaInicio: {
             type: String,
             required: true,
-            match: /^([01]\d|2[0-3]):([0-5]\d)$/
+            match: [/^([01]\d|2[0-3]):([0-5]\d)$/, "La hora de inicio es obligaorio"]
         },
         horaFin : {
             type: String,
@@ -28,7 +28,7 @@ const Plantilla_horarioSchema = new Schema(
          nivel: {
             type: Schema.Types.ObjectId,
             ref: 'Nivel',
-            required: true
+            required: [true, "El id del nivel es obligatorio"]
         }
     },
     //Configuraciones de la estructura de datos 

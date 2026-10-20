@@ -26,8 +26,18 @@ const createHorario = async (req, res) => {
         
     } catch (error) {
         console.error(error);
-        res.json({msg: 'No se pudo registrar un horario'})
-        
+       
+        if(error.name == 'ValidationError'){
+            const errors = {};
+
+            // Iterar los errores para extraer la fecha de la propiedad y el error especifico
+            for (const field in error.errors) {
+                errors[field] = error.errors[field].message; // <- Cambiado de errors(field) a errors[field]
+            }
+            res.json({errors})
+        } else {
+            res.json({msg: 'No se pudo registrar un horario'})
+        }
     }
 }
 

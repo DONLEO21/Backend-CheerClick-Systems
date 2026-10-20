@@ -3,17 +3,17 @@ import { Schema, model } from "mongoose";
 const HorarioSchema = new Schema({
     fecha: {
         type: Date,
-        required: true
+        required: [true, "La fecha del horario es obligatorio"]
     },
     enfoque: {
         type: String,
-        required: true,
+        required: [true, "El enfoque es obligaorio"],
         trim: true,
-        maxlength: 100 
+        maxlength: [100, 'El enfoque debe de tener 100 caracteres']
     },
     lugar: {
         type: String,
-        required: true,
+        required: false,
         trim: true,
         maxlength: 100 
     },
@@ -21,7 +21,7 @@ const HorarioSchema = new Schema({
         type: String,
         required: true,
         trim: true,
-        maxlength: 250
+        maxlength: [250, "Los caracteres de las notas son de 250"]
     },
     estado: {
         type: String, 
@@ -37,7 +37,7 @@ const HorarioSchema = new Schema({
     franjaInicio: {
         type: String,
         required: true,
-        match: /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/
+        match: [/^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/, "La hora de inicio es obligatorio"]
     },
     franjaFin: {
         type: String,
@@ -63,7 +63,7 @@ const HorarioSchema = new Schema({
     nivel: {
         type: Schema.Types.ObjectId,
         ref: 'Nivel',
-        required: true
+        required: [true, "El id del nivel es obligatorio"]
     }
 },
 {

@@ -6,6 +6,7 @@ import conexion from './config/mongo.config.js';
 import horariosRoute from './routes/horarios.routes.js';
 import plantilla_horariosRoute from './routes/plantilla_horarios.routes.js'
 import nivelesRoute from './routes/niveles.routes.js'
+import competenciasRoute from './routes/competencias.routes.js'
 
 const port = process.env.PORT || 3001;
 
@@ -26,6 +27,7 @@ app.get('/health', (req, res) => {
 app.use('/api/horarios', horariosRoute);
 app.use('/api/plantilla_horario', plantilla_horariosRoute)
 app.use('/api/niveles', nivelesRoute )
+app.use('/api/competencias', competenciasRoute)
 
 
 
