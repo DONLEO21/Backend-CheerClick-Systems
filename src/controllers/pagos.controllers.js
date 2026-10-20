@@ -24,6 +24,19 @@ const createPago = async (req, res)  => {
     res.json({msg :'Registrar Pagos', data: data})
     } catch (error) {
         console.error(error); 
+
+        if(error.name == 'ValidationError'){
+            const errors = {}
+
+            //Iterar un objetolos errores para extraer el nombre de la propiedad y el error espacifico
+
+            for ( const field in error.errors){
+                errors[field] = error.errors[field].message;
+            }
+
+            res.json({errors})
+        }
+
         res.json({msg: 'Error al registrar pago'})
     }
 }
@@ -37,10 +50,22 @@ const updatePagoPatch = async  (req, res) => {
 
         res.json({ msg : 'Actualizar los campos del pago', data: data });
     } catch (error) {
-        console.error(error);
-        res.json({ msg : 'No se pudo actualizar los campos del pago'})
-        
-    } 
+        console.error(error); 
+
+        if(error.name == 'ValidationError'){
+            const errors = {}
+
+            //Iterar un objetolos errores para extraer el nombre de la propiedad y el error espacifico
+
+            for ( const field in error.errors){
+                errors[field] = error.errors[field].message;
+            }
+
+            res.json({errors})
+        }
+
+        res.json({msg: 'Error al actualizar los campos de pago'})
+    }
 }
 
 const deletePago = async (req, res) => {

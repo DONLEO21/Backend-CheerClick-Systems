@@ -6,28 +6,28 @@ const MensualidadSchema = new Schema(
     { 
         fechaGeneracion: {
             type: Date,
-            required: true 
+            required: [true, 'La fecha de generacion de la mensualidad es obligatoria']
         },
         fechaVencimiento: {
             type: Date,
-            required: true,
+            required: [true, 'La fecha de vencimiento de la mensualidad es obligatoria'],
 
         },
         valor: {
             type: Number,
-            required: true,
+            required: [true, 'El valor de la mensualidad es obligatorio'],
             trim: true
         },
         numReferencia:{
             type: String,
-            required: true,
+            required: [true, 'El numero de referencia de la mensualidad es obligatorio'],
             trim: true,
-            minlenght: 5
+            minlenght: [5, 'El numero de referencia debe ser mayor a 5 caracteres']
         },
         planAsociado: {
             type:Schema.Types.ObjectId,
             ref: 'planAsociado',
-            required:true
+            required:[true, 'El ID del plan asociado es obligatorio']
         }
         },
   //Configuraciones de la estructura de datos 

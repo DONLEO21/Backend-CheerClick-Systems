@@ -8,23 +8,23 @@ const PagosSchema = new Schema(
     estado : {
         type: String,
         enum: ['Pagado', 'Vencido', 'Pendiente'],    //Tipo de dato
-        required : true,    //Regla: Es OBLIGATORIO
+        required : [true, 'El estado del pago es obligatorio'],    //Regla: Es OBLIGATORIO
         trim: true   //Modificador : 
     },
     valorTotal : {
         type: Number,
-        required : true,
+        required : [true, 'El valor del pago es obligatorio'],
         trim : true 
     },
     fechaGenera : {
         type: Date,
-        required : true
+        required : [true, 'El la fecha de generacion del pago es obligatoria']
     },
     responsableRegis : {
         type: String,
-        required : true,
+        required : [true, 'El nombre del responsable es obligatorio'],
         trim: true,
-        maxlength: 50
+        maxlength: [50, 'Se supero la cantidad de caracteres']
     },
     fechaPago : {
         type: Date
@@ -32,12 +32,12 @@ const PagosSchema = new Schema(
     observaciones: {
         type : String,
         trim: true,
-        maxlength: 100
+        maxlength: [100, 'Se supero la cantidad de caracteres para las observaciones']
     },
     metodoPago : {
         type: Schema.Types.ObjectId,
         ref : 'metodoPago',
-        required: true
+        required: [true, 'El ID del pago es obligatorio']
     }
     // metodoPago : {
     //     type: Schema.Types.ObjectId,

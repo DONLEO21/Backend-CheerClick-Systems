@@ -3,7 +3,7 @@ import {Schema, model} from "mongoose";
 const metodoPagoSchema = new Schema({
     nombre : {
         type: String,
-        required: true,
+        required: [true, 'El nombre del metodo de pago es obligatorio'],
         trim : true
     }
 });
