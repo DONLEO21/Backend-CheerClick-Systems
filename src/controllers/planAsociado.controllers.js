@@ -86,14 +86,20 @@ const UpdatePlanAsociado = async (req, res) => {
 }
 
 const GetPlanesAsociados = async (req, res) => {
+    const id = req.params.id; 
     try {
-        const id = req.params.id; 
         const data = await dbGetPlanesAsociados (id);
 
         res.json({msg: 'Consultar uno de los planes por su ID', data: data});
     } catch (error) {
+
         console.error(error);
-        res.json({msg : 'No se pudo encontrar el plan asociado'});
+
+        if(error.name == 'CastError') {
+            return res.json({
+            msg: `Error en el formato del ID debe tener 24 caracteres el enviado tiene ${id.length}`, 
+            [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`});
+        }
     }
 }
 
