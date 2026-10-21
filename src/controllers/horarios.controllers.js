@@ -8,7 +8,7 @@ const getHorario = async (req, res) => {
 
         const data = await dbgetdHorario(inputData);
 
-        res.json({msg: 'Consulte los horarios', data : data})
+        res.status(201).json({msg: 'Consulte los horarios', data : data})
         
     } catch (error) {
         console.error(error);
@@ -38,6 +38,18 @@ const createHorario = async (req, res) => {
         } else {
             res.json({msg: 'No se pudo registrar un horario'})
         }
+
+          if(error.code == 11000) {
+            const field = Object.keys(error.keyValue)[0];
+
+            return res.json ({
+                msg: `Error por duplicidad en el campo '${field}'`,
+                [field] : `El '${ field }' de '${error.keyValue[ field ]}' ya se encuentra registrado` 
+            });
+
+        }
+
+
     }
 }
 
@@ -73,14 +85,18 @@ const deleteHorario = async  (req, res) => {
 }
 
 const getHorarios = async (req, res) => {
-    try {
     const id = req.params.id
+    try {
     const data = await dbGetHorarios(id);
 
     res.json({msg: 'Obtiene un horario', data: data})
         
     } catch (error) {
         console.error(error);
+
+        if(error.name == 'CastError') {
+            return res.json({msg: `El ID debe tener 24 caracteres y el enviado tiene ${id.length}`, [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`});
+        }
         res.json({msg : 'No se puede obtener un horario'})
     }
 

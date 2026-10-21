@@ -7,7 +7,7 @@ const createPlantillahorario = async (req, res) => {
     // Usar el servicio para registrar
     const data = await dbCreatePlantilla_horario(inputData);
   
-    res.json({msg: 'Registra la plantilla de horario', data : data});
+    res.status(201).json({msg: 'Registra la plantilla de horario', data : data});
         
     } catch (error) {
         console.error(error);

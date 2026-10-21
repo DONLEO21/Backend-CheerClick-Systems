@@ -6,10 +6,12 @@ const createNivel = async (req, res) => {
 
         const data = await dbCreateNivel(inputData);
 
-        res.json({msg : 'Registrar un nivel', data : data});
+        res.status(201).json({msg : 'Registrar un nivel', data : data});
         
     } catch (error) {
         console.error(error)
+
+
 
         if(error.code == 11000) {
             const field = Object.keys(error.keyValue)[0];
@@ -20,6 +22,7 @@ const createNivel = async (req, res) => {
             });
 
         }
+        
         
     }
 }
@@ -37,8 +40,8 @@ const getNivel = async (req, res) => {
 }
 
 const updateNivel = async (req, res) => {
+    const id = req.params.id;
     try {
-        const id = req.params.id;
         const inputData = req.body
 
         const data = await dbUpdateNivel(id, inputData);
@@ -47,6 +50,7 @@ const updateNivel = async (req, res) => {
         
     } catch (error) {
         console.error(error);
+        console.log('ID', id);
 
         if(error.code == 11000) {
             const field = Object.keys(error.keyValue)[0];
@@ -55,6 +59,10 @@ const updateNivel = async (req, res) => {
                 [field] : `El '${ field }' de '${error.keyValue[ field ]}' ya se encuentra registrado` 
             });
 
+        }
+
+        if(error.name == 'CastError') {
+            return res.json({msg: `El ID debe tener 24 caracteres y el enviado tiene ${id.length}`, [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`});
         }
     }
 
@@ -77,16 +85,19 @@ const deleteNivel = async (req, res) => {
 }
 
 const getNiveles = async (req, res) => {
+    const id = req.params.id
     try {
-        const id = req.params.id
-
         const data = await dbGetNiveles(id);
 
         res.json({msg : 'Obtiene un nivel', data: data})
         
     } catch (error) {
         console.error(error);
-        res.json({msg: 'No se pudo obtener un nivel'})
+        console.log('ID', id);
+
+        if(error.name == 'CastError') {
+            return res.json({msg: `El ID debe tener 24 caracteres y el enviado tiene ${id.length}`, [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`});
+        }
     }
 }
 

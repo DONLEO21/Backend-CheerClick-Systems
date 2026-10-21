@@ -20,7 +20,7 @@ app.use( express.json())
 
 // Definiendo endpoint (ruta de entrada)
 app.get('/health', (req, res) => {
-    res.send('Servidor de CheerClick Systems Funcionando')
+    res.json({ msg: 'Servidor de CheerClick Systems Funcionando'});
 });
 
 // Enlazar todas las rutas de la aplicacion
