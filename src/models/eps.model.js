@@ -6,7 +6,6 @@ const EpsSchema = new Schema(
   {
     nombre: {
       type: String,
-      unique: true,
       enum: ["Sanitas", "Famisanar", "Nueva EPS", "Capital Salud"],
       default: "Famisanar",
     },

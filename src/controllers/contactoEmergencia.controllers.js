@@ -27,6 +27,19 @@ const createContactoEmergencia = async (req, res) => {
     catch (error) {
         console.error(error);
 
+        
+        if(error.name == 'ValidationError'){
+            const errors ={};
+
+            //Iterar los erores para estraer el nombre de la propiedad y el error
+            for(const field in error.errors) {
+                errors[field] = error.errors[field].message;
+            }
+            
+            res.json({errors})     //Retorna un error especifico
+ 
+        } 
+
         res.json({msg: 'No se pudo registrar contacto de emergencia'})
 
     }
