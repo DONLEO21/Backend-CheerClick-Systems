@@ -3,9 +3,8 @@ import { Schema, model} from "mongoose";
 const contactoEmergenciaSchema =new Schema({
     parentesco: {
         type: String,
-        unique: [true, 'El parentesco debe ser unico'],
         enum: ["Madre", "Padre", "Tutor", "Cónyuge", "Otro"],
-        default: "Madre",
+        default: "Madre",     
     },
     nombre: {
         type: String,            

@@ -5,7 +5,7 @@ const router = Router();
 
 // Definicion de las rutas para usuarios
 
-router.get('/', getUsuario);
+router.get('/:id', getUsuario);
 router.post('/', createUsuario);
 router.put('/', updateUsuario);
 router.patch('/', updateUsuarioP);

@@ -20,7 +20,7 @@ app.use(express.json());
 
 //Definiendo el primer endpoint (Ruta de entrada) 
 app.get('/health', (req, res) => {
-    res.send('Servidor de CheerClick esta funcionando!')
+    res.status(200).json({msg : 'Servidor de CheerClick esta funcionando!'})
 
 });
 

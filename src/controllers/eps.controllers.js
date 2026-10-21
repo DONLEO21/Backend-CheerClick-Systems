@@ -7,10 +7,21 @@ const createEps = async (req, res) => {
     //Usar el servicio para registrar
     const data = await dbCreateEps(inputData)
 
-    res.json({ msg: 'Registrar eps', data: data})
+    res.status(201).json({ msg: 'Registrar eps', data: data})
     }
     catch (error){
         console.error(error);
+
+        if(error.code == 11000){
+            
+            const field = Object.keys(error.keyValue)[0]
+
+            //Mensaj de error que se la envia al usuario
+            return res.status(400).json ( {
+                msg: `Error por duplicado en el campo '${field}'`,
+                [field] : `El ${field} ${error.keyValue[ field] } ya se encuentra registrado`
+            });
+        }
 
         if(error.name == 'ValidationError'){
             const errors ={};
@@ -20,10 +31,10 @@ const createEps = async (req, res) => {
                 errors[field] = error.errors[field].message;
             }
             
-            res.json({errors})     //Retorna un error especifico
+            res.status(400).json({errors})     //Retorna un error especifico
  
         } 
-        res.json({ msg :'No se pudo registrar la EPS'})    //Retorna un error generico 
+        res.status(500).json({ msg :'No se pudo registrar la EPS'})    //Retorna un error generico 
     }
 }
 
@@ -31,12 +42,16 @@ const getEps = async (req, res) => {
     try {
         const data =  await dbGetEps();
 
-        res.json({
+        res.status(200).json({
             msg: 'Lista de EPS',
             data: data
         })
     }
     catch ( error ) {
+
+        if(error.name == 'CastError') {
+            return res.json({msg: 'Error en el formato del ID', [error.path]: `El identificador ${error.value} no tiene el formato valido que reuiere MongoDB`});
+        }
         console.error(error);
 
         res.json({
