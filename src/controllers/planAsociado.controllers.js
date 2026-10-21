@@ -9,6 +9,20 @@ const CreatePlanAsociado = async (req, res ) => {
     } catch (error) {
 
         console.error(error)
+        //Verificar si el error es por duplicidad
+        if(error.code == 11000 ){
+            // console.log(error.Keyvalue);
+            // console.log(Object.keys(error.Keyvalue))
+            // console.log(Object.keys(error.KeyValue) [0])}
+
+            const field = Object.keys(error.keyValue)[0];
+
+            return res.json ({
+                [field] : `El '${ field }' con el valor '${error.keyValue[ field ]}' ya se encuentra registrado` 
+            });
+
+        }
+
         res.json({ msg: 'No se puedo registrar el plan asociado'})
         
     }
@@ -49,8 +63,24 @@ const UpdatePlanAsociado = async (req, res) => {
 
         res.json({ msg : 'Actualizar los campos del plan asociado ', data: data });
     } catch (error) {
-        console.error(error);
-        res.json({ msg : 'No se puedo actualizar los campos del plan asociado '})
+
+        console.error(error)
+        //Verificar si el error es por duplicidad
+        if(error.code == 11000 ){
+            // console.log(error.Keyvalue);
+            // console.log(Object.keys(error.Keyvalue))
+            // console.log(Object.keys(error.KeyValue) [0])}
+
+            const field = Object.keys(error.keyValue)[0];
+
+            return res.json ({
+                msg : `Error por duplicidad en el campo '${field}'`,
+                [field] : `El '${ field }' con el valor '${error.keyValue[ field ]}' ya se encuentra registrado` 
+            });
+
+        }
+
+        res.json({ msg: 'No se puedo registrar el plan asociado'})
         
     }
 }
