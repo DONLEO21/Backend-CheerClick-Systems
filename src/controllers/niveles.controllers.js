@@ -9,8 +9,17 @@ const createNivel = async (req, res) => {
         res.json({msg : 'Registrar un nivel', data : data});
         
     } catch (error) {
-        console.error
-        res.json({msg : 'No se pudo registrar un nivel'})
+        console.error(error)
+
+        if(error.code == 11000) {
+            const field = Object.keys(error.keyValue)[0];
+
+            return res.json ({
+                msg: `Error por duplicidad en el campo '${field}'`,
+                [field] : `El '${ field }' de '${error.keyValue[ field ]}' ya se encuentra registrado` 
+            });
+
+        }
         
     }
 }
@@ -38,7 +47,15 @@ const updateNivel = async (req, res) => {
         
     } catch (error) {
         console.error(error);
-        res.json({msg: 'No se pudo actualizar el nivel'})
+
+        if(error.code == 11000) {
+            const field = Object.keys(error.keyValue)[0];
+
+            return res.json ({
+                [field] : `El '${ field }' de '${error.keyValue[ field ]}' ya se encuentra registrado` 
+            });
+
+        }
     }
 
 }

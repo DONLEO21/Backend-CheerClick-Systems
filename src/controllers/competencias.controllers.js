@@ -1,4 +1,4 @@
-import { dbCreateCompetencia, dbDeleteCompetencia, dbGetCompetencia } from "../services/competencias.services.js";
+import { dbCreateCompetencia, dbDeleteCompetencia, dbGetCompetencia, dbUpdateCompetencia, dbGetCompetencias} from "../services/competencias.services.js";
 
 
 const getCompetencia = async (req, res) => {
@@ -48,11 +48,45 @@ const deleteCompetencia = async (req, res) => {
 
 }
 
+const updateCompetencia = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const inputData = req.body
+
+        const data = await dbUpdateCompetencia(id, inputData);
+        res.json({msg: 'Actualiza una competencia', data: data});
+        
+    } catch (error) {
+        console.error(error);
+
+    res.json({msg: 'No se pudo actualizar la competencia'})
+
+        
+    }
+}
+
+const getCompetencias = async (req, res) => {
+    try {
+        const id = req.params.id
+        const data = await dbGetCompetencias(id);
+
+        res.json({msg: 'Obtiene una competencia', data: data})
+
+        
+    } catch (error) {
+        console.error(error);
+        res.json({msg : 'No se puede obtener una competencia'})
+        
+    }
+}
+
 
 
 
 export { 
     getCompetencia,
     createCompetencia,
-    deleteCompetencia
+    deleteCompetencia,
+    updateCompetencia,
+    getCompetencias
 }

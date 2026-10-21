@@ -14,8 +14,18 @@ const dbDeleteCompetencia = async (id) => {
     
 }
 
+const dbUpdateCompetencia = async (id, competenciaUpdate) => {
+    return await CompetenciaModel.findOneAndUpdate({ _id: id}, competenciaUpdate, {new: true});
+}
+
+const dbGetCompetencias = async (id) => {
+    return await CompetenciaModel.findOne({ _id: id});
+}
+
 export {
     dbGetCompetencia,
     dbCreateCompetencia,
-    dbDeleteCompetencia
+    dbDeleteCompetencia,
+    dbUpdateCompetencia, 
+    dbGetCompetencias
 }
