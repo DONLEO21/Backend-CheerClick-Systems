@@ -12,7 +12,7 @@ const getHorario = async (req, res) => {
         
     } catch (error) {
         console.error(error);
-        res.json({msg: 'No se pudo consultar los horarios'})  
+        res.status(500).json({msg: 'No se pudo consultar los horarios'})  
     }
 }
 
@@ -34,28 +34,25 @@ const createHorario = async (req, res) => {
             for (const field in error.errors) {
                 errors[field] = error.errors[field].message; // <- Cambiado de errors(field) a errors[field]
             }
-            res.json({errors})
-        } else {
-            res.json({msg: 'No se pudo registrar un horario'})
+            res.status(400).json({errors})
         }
-
           if(error.code == 11000) {
             const field = Object.keys(error.keyValue)[0];
 
-            return res.json ({
+            return res.status(400).json ({
                 msg: `Error por duplicidad en el campo '${field}'`,
                 [field] : `El '${ field }' de '${error.keyValue[ field ]}' ya se encuentra registrado` 
             });
 
         }
-
+        res.status(500).json({msg: 'No se pudo registrar un horario'})
 
     }
 }
 
 const updateHorario = async (req, res) => {
+    const id = req.params.id;
     try {
-        const id = req.params.id;
         const inputData=req.body
 
         const data = await dbupdateHorario(id, inputData);
@@ -64,22 +61,52 @@ const updateHorario = async (req, res) => {
         
     } catch (error) {
         console.error(error);
-        res.json({msg: 'No se pudo actualizar un horario'})
-        
+        console.log('ID', id);
+
+        // Primer error
+        if(error.code == 11000) {
+            const field = Object.keys(error.keyValue)[0];
+
+            return res.status(400).json ({
+                msg: `Error por duplicidad en el campo '${field}'`,
+                [field] : `El '${ field }' de '${error.keyValue[ field ]}' ya se encuentra registrado` 
+            });
+
+        }
+        // Segundo Error
+        if(error.name == 'CastError') {
+            return res.status(400).json({msg: `El ID debe tener 24 caracteres y el enviado tiene ${id.length}`, [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`});
+        }
+
+        // Tercer Error
+        if(error.name == 'ValidationError'){
+            const errors = {};
+
+            // Iterar los errores para extraer la fecha de la propiedad y el error especifico
+            for (const field in error.errors) {
+                errors[field] = error.errors[field].message; // <- Cambiado de errors(field) a errors[field]
+            }
+            res.status(400).json({errors})
+        } 
+        res.status(500).json({msg: 'No se pudo actualizar un horario'})
     }
 }
 
 const deleteHorario = async  (req, res) => {
+    const id= req.params.id;
     try {
-        const id= req.params.id;
-
         const data = await dbdeleteHorario(id);
 
         res.json({msg: 'Elimine un horario', data: data});
         
     } catch (error) {
         console.error(error);
-        res.json({msg: 'No se pudo eliminar un horario'})
+        console.log('ID', id);
+
+        if(error.name == 'CastError') {
+            return res.status(400).json({msg: `El ID debe tener 24 caracteres y el enviado tiene ${id.length}`, [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`});
+        }
+        res.status(500).json({msg: 'No se pudo eliminar un horario'})
         
     }
 }
@@ -95,11 +122,10 @@ const getHorarios = async (req, res) => {
         console.error(error);
 
         if(error.name == 'CastError') {
-            return res.json({msg: `El ID debe tener 24 caracteres y el enviado tiene ${id.length}`, [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`});
+            return res.status(400).json({msg: `El ID debe tener 24 caracteres y el enviado tiene ${id.length}`, [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`});
         }
-        res.json({msg : 'No se puede obtener un horario'})
+        res.status(500).json({msg : 'No se puede obtener un horario'})
     }
-
 }
 
 export {

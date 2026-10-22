@@ -21,7 +21,7 @@ const dbDeleteNivel =  async (id) => {
 }
 
 const dbGetNiveles = async (id) => {
-    return await NivelModel.findOne({ _id: id})
+    return await NivelModel.findOne({ _id: id});
 }
 
 

@@ -33,10 +33,7 @@ const createCompetencia = async (req, res) => {
                 errors[field] = error.errors[field].message; // <- Cambiado de errors(field) a errors[field]
             }
             res.status(400).json({errors})
-        } else {
-            res.json({msg: 'No se pudo registrar un horario'})
         }
-
         if(error.code == 11000) {
             const field = Object.keys(error.keyValue)[0];
 
@@ -109,7 +106,7 @@ const updateCompetencia = async (req, res) => {
             }
             res.status(400).json({errors})
         } else {
-            res.status(500).json({msg: 'No se pudo registrar un horario'})
+            res.status(500).json({msg: 'No se pudo registrar una competencia'})
         }
  
     }

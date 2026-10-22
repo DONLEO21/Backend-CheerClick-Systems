@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://localhost:3000/api/competencias/6ad8ea0eef3f92d491ca5ca6
+  url: http://localhost:3000/api/competencias/6ad8ea0eef3f92d491ca5c
   auth: inherit
 
 settings:

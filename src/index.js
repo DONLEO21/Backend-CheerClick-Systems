@@ -7,6 +7,8 @@ import horariosRoute from './routes/horarios.routes.js';
 import plantilla_horariosRoute from './routes/plantilla_horarios.routes.js'
 import nivelesRoute from './routes/niveles.routes.js'
 import competenciasRoute from './routes/competencias.routes.js'
+import pqrsRoute from './routes/pqrs.routes.js'
+import respuestapqrsRoute from './routes/respuesta_pqrs.routes.js'
 
 const port = process.env.PORT || 3001;
 
@@ -25,9 +27,12 @@ app.get('/health', (req, res) => {
 
 // Enlazar todas las rutas de la aplicacion
 app.use('/api/horarios', horariosRoute);
-app.use('/api/plantilla_horario', plantilla_horariosRoute)
-app.use('/api/niveles', nivelesRoute )
-app.use('/api/competencias', competenciasRoute)
+app.use('/api/plantilla_horario', plantilla_horariosRoute);
+app.use('/api/niveles', nivelesRoute );
+app.use('/api/competencias', competenciasRoute);
+app.use('/api/pqrs', pqrsRoute);
+app.use('/api/respuesta_pqrs', respuestapqrsRoute)
+
 
 
 

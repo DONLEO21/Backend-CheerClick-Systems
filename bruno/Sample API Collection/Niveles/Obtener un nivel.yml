@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://localhost:3000/api/niveles/6ad64b5405aed7c782a3f679
+  url: http://localhost:3000/api/niveles/6ad64b5405aed7c782a3f679gsgsdgs
   auth: inherit
 
 settings:
