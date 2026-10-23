@@ -27,7 +27,7 @@ app.get('/health', (req, res) => {
 //Enlazar todas las rutas de la aplicacion 
 app.use( '/api/usuarios' , usuariosRoute );
 app.use( '/api/eps' ,  epsRoute)
-app.use( '/api/contactoEmergencia' , contactoEmergenciaRoute)
+app.use( '/api/contactoemergencia' , contactoEmergenciaRoute)
 
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
