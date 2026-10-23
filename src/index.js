@@ -5,6 +5,7 @@ import conexion from './config/mongo.config.js'; //Importar la connexion a la ba
 import pagosRouter from './routes/pagos.routes.js'; //EsModule
 import mensualidadRouter from './routes/mensualidades.routes.js'
 import PlanAsociadoRouter from './routes/planAsociado.routes.js';
+import MetodoPagoRouter from './routes/metodosPago.routes.js';
 
 const port= process.env.PORT || 3001;
 
@@ -16,7 +17,7 @@ app.use(express.json()) //Habilita a la aplicacion para interpretar JSON
 
 //Definiendo el primer endpoint (Ruta de entrada) 
 app.get('/health', (req, res) => {
-    res.send('Servidor de CheerClick esta funcionando!')
+    res.status(200).json({ msg: 'Servidor de CheerClick esta funcionando!'})
 
 });
 
@@ -24,6 +25,7 @@ app.get('/health', (req, res) => {
 app.use( '/api/pagos' , pagosRouter );
 app.use( '/api/mensualidades', mensualidadRouter);
 app.use( '/api/plan-asociado', PlanAsociadoRouter);
+app.use( '/api/metodo-pago', MetodoPagoRouter)
 
 //Iniciar servidor 
 app.listen(port, () => {

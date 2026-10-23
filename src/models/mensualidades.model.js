@@ -10,8 +10,7 @@ const MensualidadSchema = new Schema(
         },
         fechaVencimiento: {
             type: Date,
-            required: [true, 'La fecha de vencimiento de la mensualidad es obligatoria'],
-
+            required: [true, 'La fecha de vencimiento de la mensualidad es obligatoria']
         },
         valor: {
             type: Number,
@@ -28,6 +27,11 @@ const MensualidadSchema = new Schema(
             type:Schema.Types.ObjectId,
             ref: 'planAsociado',
             required:[true, 'El ID del plan asociado es obligatorio']
+        },
+        pago: {
+            type:Schema.Types.ObjectId,
+            ref: 'Pagos',
+            required: [true, 'El ID de pagos es obligatorio']
         }
         },
   //Configuraciones de la estructura de datos 

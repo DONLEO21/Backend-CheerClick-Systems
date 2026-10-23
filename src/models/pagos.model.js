@@ -29,6 +29,11 @@ const PagosSchema = new Schema(
     fechaPago : {
         type: Date
     },
+    comprobante:{
+        type: String,
+        required : [true, 'La ruta del comprobante es obligatoria'],
+        trim:true
+    },
     observaciones: {
         type : String,
         trim: true,
@@ -39,11 +44,6 @@ const PagosSchema = new Schema(
         ref : 'metodoPago',
         required: [true, 'El ID del pago es obligatorio']
     }
-    // metodoPago : {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'metodoPago',
-    //     required: true
-    // }
 },
 //
 {
