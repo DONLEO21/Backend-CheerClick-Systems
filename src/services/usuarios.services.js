@@ -12,9 +12,17 @@ const dbGetUsuario = async (id) => {
     return await usuarioModel.findOne({ _id : id})
 }
 
-const dbUpdateUsuario = () => {}
+const dbUpdateUsuario = async (id, usuarioUpdate) => {
+    return await usuarioModel.findByIdAndUpdate (
+        id,
+        usuarioUpdate,
+        {new : true}
+    );
+}
 
-const dbDeleteUsuario = () => {}
+const dbDeleteUsuario = async (id) => {
+    return await usuarioModel.findOneAndDelete({_id: id})
+}
 
 export {
     dbCreateUsuario,

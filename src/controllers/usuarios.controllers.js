@@ -1,4 +1,4 @@
-import { dbCreateUsuario, dbGetUsuario } from "../services/usuarios.services.js"
+import { dbCreateUsuario, dbGetUsuario, dbUpdateUsuario, dbDeleteUsuario } from "../services/usuarios.services.js"
 
 //Controlador define quien hace una accion especifica
 const getUsuario = async (req, res) => {
@@ -30,7 +30,7 @@ const getUsuario = async (req, res) => {
 const createUsuario = async (req, res) => {
     try {
     
-        //obtenemos el usuario desde le cuerpó de la peticion (Request)
+        //obtenemos el usuario desde le cuerpo de la peticion (Request)
         const usuario = req.body;
 
         const newUsuario = await dbCreateUsuario(usuario);      //Llega como una Promesa (Promise)
@@ -58,21 +58,48 @@ const createUsuario = async (req, res) => {
 }
 
 
-const updateUsuarioP = (req, res) => {
-    res.send( 'Actualizar parcialmente las propiedades de los usuarios')
+const updateUsuario = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const inputData = req.body;
+
+        const data = await dbUpdateUsuario(id, inputData);
+
+        res.json({
+            msg: 'Usuario Actualizado',
+            data: data
+        });
+    }
+    catch ( error){
+        console.error( error);
+
+        res.json({
+            msg: 'No se ha podido actualizar el usuario'
+        })
+    }
 }
 
-const updateUsuario = (req, res) => {
-    res.send( 'Actualizar todas las propiedades de los usuarios')
-}
+const deleteUsuario = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await dbDeleteUsuario(id);
 
-const deleteUsuario = (req, res) => {
-    res.send( 'Eliminar usuarios')
+        res.json ({
+            msg: 'Usuario eliminado',
+            data: data
+        })
+    }
+    catch ( error) {
+        console.error (error);
+
+        res.json({
+            msg: 'No se ha podido eliminar el usuario'
+        })
+    }
 }
 export{
     getUsuario,
     createUsuario,
     updateUsuario,
-    updateUsuarioP,
     deleteUsuario
 }
