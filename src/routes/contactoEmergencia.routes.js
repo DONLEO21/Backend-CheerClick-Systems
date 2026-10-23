@@ -6,7 +6,7 @@ const router = Router();
 
 // Define las rutas para los contactos
 router.post( '/', createContactoEmergencia);
-router.get('/', getContactoEmergencia);
+router.get('/:id', getContactoEmergencia);
 router.delete('/:id', deleteContactoEmergencia);
 router.patch('/:id', updateContactoEmergencia)
 

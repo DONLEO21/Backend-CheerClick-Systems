@@ -1,17 +1,28 @@
 import { dbCreateContactoE, dbDeleteContactoE, dbGetContactoE, dbUpdateContactoE } from "../services/contactoEmergencia.services.js";
 
 const getContactoEmergencia = async (req, res) => {
+    const id = req.params.id;
     try {
-        const data = await dbGetContactoE();
+        const data = await dbGetContactoE(id);
 
-        res.json({msg : 'Listar un contacto de emergencia', data: data})
+        res.json({
+            msg: 'Obtiene un contacto de emergencia',
+            data: data
+        })
     }
-    catch (error){
+    catch (error) {
         console.error(error);
 
-        res.json({msg: 'No se ha podido listar el contacto de emergencia'})
+        if (error.name == 'CastError') {
+            return res.json({
+                msg: `El ID debe tener 24 caracteres  y el enviado tiene ${id.length}`,
+                [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`
+            });
+        }
+        res.json({
+            msg: 'No se puede obtener el contacto de emergencia por ID'
+        });
     }
-
 }
 
 const createContactoEmergencia = async (req, res) => {

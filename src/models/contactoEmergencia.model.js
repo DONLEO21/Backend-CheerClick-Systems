@@ -3,8 +3,8 @@ import { Schema, model} from "mongoose";
 const contactoEmergenciaSchema =new Schema({
     parentesco: {
         type: String,
-        enum: ["Madre", "Padre", "Tutor", "Cónyuge", "Otro"],
-        default: "Madre",     
+        enum: ['Madre', 'Padre', 'Tutor', 'Cónyuge', 'Otro'],
+        default: 'Madre',     
     },
     nombre: {
         type: String,            
@@ -23,6 +23,7 @@ const contactoEmergenciaSchema =new Schema({
     },
     principal: {
         type: Boolean,
+        default: false,
         required: [true, 'Es obligatorio']
     },
     createdBy: {
@@ -31,8 +32,10 @@ const contactoEmergenciaSchema =new Schema({
         default: null
     }
 
-},{});
+},{
+    timestamps: true
+});
 
-const contactoEModel = model( 'contactoE', contactoEmergenciaSchema );
+const contactoEModel = model( 'contactoemergencia', contactoEmergenciaSchema );
 
 export default contactoEModel;
