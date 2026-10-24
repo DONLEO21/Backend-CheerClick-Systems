@@ -1,9 +1,26 @@
-// const express = require('express'); //CommonJS
-import express from 'express'; //EsModule
+import express from 'express';
 
-const app = express();
+import rendimientoRoute from './routes/rendimiento.routes.js';
 
-const port=3000;
+
+import conexion from './config/mongo.config.js' 
+
+const port= process.env.PORT || 3001;
+
+const app = express();    
+
+conexion();  
+
+app.use(express.json());
+
+app.get('/health', (req, res) => {
+    res.status(200).json({msg : 'Servidor de CheerClick esta funcionando!'})
+
+});
+
+
+app.use( '/api/rendimiento' , rendimientoRoute );
+
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
