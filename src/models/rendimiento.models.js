@@ -13,9 +13,9 @@ const rendimientoSchema = new Schema(
       required: [true, "La habilidad es obligatoria"],
     },
     calificacion: {
-      type: Number,
+      type: Boolean,
+      default: false,
       required: [true, "La calificación es obligatoria"],
-      boolean: false,
     },
     observaciones: {
       type: String,

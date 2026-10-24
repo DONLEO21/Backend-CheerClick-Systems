@@ -13,14 +13,16 @@ conexion();
 
 app.use(express.json());
 
+//Definiendo endpoint (ruta de entrada)
 app.get('/health', (req, res) => {
     res.status(200).json({msg : 'Servidor de CheerClick esta funcionando!'})
 
 });
 
-
+// Enlazar todas las rutas de la aplicacion
 app.use( '/api/rendimiento' , rendimientoRoute );
 
+// Iniciar Servidor
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
