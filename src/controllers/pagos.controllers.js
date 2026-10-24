@@ -1,88 +1,148 @@
-import { dbDeletePago, dbInsertPago, dbReadPagos, dbUpdatePago } from "../services/pagos.services.js";
+import { dbDeletePago, dbgetPagos, dbInsertPago, dbReadPagos, dbUpdatePago } from "../services/pagos.services.js";
 
-//El controlador define quien hace una accion especifica
 const getPagos = async (req, res) => {
     try {
         const data = await dbReadPagos();
-        res.json({ msg: 'Consultar todos los pagos registrados', data: data})
-    } catch (error) {
 
-        console.error(error)
-        res.json({ msg: 'No se pudo consultar los pagos registrados'})
+        return res.status(200).json({ msg: 'Consultar todos los pagos registrados', data: data });
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({ msg: 'No se pudo consultar los pagos registrados' });
     }
-}
+};
 
-const createPago = async (req, res)  => {
+const getPago = async (req, res) => {
+    const id = req.params.id;
+
     try {
-    // Obtenemos el pago desde el cuerpo de la peticion
-    const inputData = req.body;
+        const data = await dbgetPagos(id);
 
-    //Conecta con el servicio para crear un pago en la base de datos 
-    const data = await dbInsertPago(inputData); //Llega como una promesa 
+        if (!data) {
+            return res.status(404).json({ msg: 'No se encontró el pago' });
+        }
 
-    //Respuesta del cliente 
-    res.json({msg :'Registrar Pagos', data: data})
+        return res.status(200).json({ msg: 'Consultar uno de los pagos por ID', data: data });
     } catch (error) {
-        console.error(error); 
+        console.error(error);
 
-        if(error.name == 'ValidationError'){
-            const errors = {}
+        if (error.name == 'CastError') {
+            return res.status(400).json({
+                msg: `Error en el formato del ID debe tener 24 caracteres el enviado tiene ${id.length}`,
+                [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`
+            });
+        }
 
-            //Iterar un objetolos errores para extraer el nombre de la propiedad y el error espacifico
+        return res.status(500).json({ msg: 'No se pudo consultar el pago por su ID' });
+    }
+};
 
-            for ( const field in error.errors){
+const createPago = async (req, res) => {
+    try {
+        const inputData = req.body;
+
+        const data = await dbInsertPago(inputData);
+
+        return res.status(201).json({ msg: 'Registrar Pagos', data: data });
+    } catch (error) {
+        console.error(error);
+
+        if (error.name == 'ValidationError') {
+            const errors = {};
+
+            for (const field in error.errors) {
                 errors[field] = error.errors[field].message;
             }
 
-            res.json({errors})
+            return res.status(400).json({ errors });
         }
 
-        res.json({msg: 'Error al registrar pago'})
-    }
-}
+        if (error.code == 11000) {
+            const field = Object.keys(error.keyValue)[0];
 
-const updatePagoPatch = async  (req, res) => {
+            return res.status(409).json({
+                [field]: `El '${field}' con el valor '${error.keyValue[field]}' ya se encuentra registrado`
+            });
+        }
+
+        return res.status(500).json({ msg: 'Error al registrar pago' });
+    }
+};
+
+const updatePagoPatch = async (req, res) => {
+    const id = req.params.id;
+
     try {
-        const id = req.params.id;
         const inputData = req.body;
 
         const data = await dbUpdatePago(id, inputData);
 
-        res.json({ msg : 'Actualizar los campos del pago', data: data });
+        if (!data) {
+            return res.status(404).json({ msg: 'No se encontró el pago a actualizar' });
+        }
+
+        return res.status(200).json({ msg: 'Actualizar los campos del pago', data: data });
     } catch (error) {
-        console.error(error); 
+        console.error(error);
 
-        if(error.name == 'ValidationError'){
-            const errors = {}
+        if (error.name == 'ValidationError') {
+            const errors = {};
 
-            //Iterar un objetolos errores para extraer el nombre de la propiedad y el error espacifico
-
-            for ( const field in error.errors){
+            for (const field in error.errors) {
                 errors[field] = error.errors[field].message;
             }
 
-            res.json({errors})
+            return res.status(400).json({ errors });
         }
 
-        res.json({msg: 'Error al actualizar los campos de pago'})
+        if (error.name == 'CastError') {
+            return res.status(400).json({
+                msg: `Error en el formato del ID debe tener 24 caracteres el enviado tiene ${id.length}`,
+                [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`
+            });
+        }
+
+        if (error.code == 11000) {
+            const field = Object.keys(error.keyValue)[0];
+
+            return res.status(409).json({
+                [field]: `El '${field}' con el valor '${error.keyValue[field]}' ya se encuentra registrado`
+            });
+        }
+
+        return res.status(500).json({ msg: 'Error al actualizar los campos de pago' });
     }
-}
+};
 
 const deletePago = async (req, res) => {
-    try {
-        const id = req.params.id;
+    const id = req.params.id;
 
-        const data = await dbDeletePago( id );
-        res.json({ msg: 'Eliminar un pago', data: data})
+    try {
+        const data = await dbDeletePago(id);
+
+        if (!data) {
+            return res.status(404).json({ msg: 'No se encontró el pago a eliminar' });
+        }
+
+        return res.status(200).json({ msg: 'Eliminar un pago', data: data });
     } catch (error) {
         console.error(error);
-        res.json({msg :'No se pudo eliminar el pago'})
+
+        if (error.name == 'CastError') {
+            return res.status(400).json({
+                msg: `Error en el formato del ID debe tener 24 caracteres el enviado tiene ${id.length}`,
+                [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`
+            });
+        }
+
+        return res.status(500).json({ msg: 'No se pudo eliminar el pago' });
     }
-}
+};
 
 export {
     getPagos,
     createPago,
-    updatePagoPatch, 
-    deletePago
-}
+    updatePagoPatch,
+    deletePago,
+    getPago
+};

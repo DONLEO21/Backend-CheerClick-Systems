@@ -4,8 +4,12 @@ const metodoPagoSchema = new Schema({
     nombre : {
         type: String,
         required: [true, 'El nombre del metodo de pago es obligatorio'],
-        trim : true
+        trim : true,
+        unique: true
     }
+},{
+    timestamps : true,
+    versionKey : false
 });
 
 const metodoPagoModel = model('metodoPago', metodoPagoSchema);

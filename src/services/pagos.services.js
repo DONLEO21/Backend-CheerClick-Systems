@@ -23,9 +23,14 @@ const dbDeletePago = async (id) => {
     return await PagosModel.findOneAndDelete({ _id: id})
 }
 
+const dbgetPagos = async (id) => {
+    return await PagosModel.findOne({_id: id})
+}
+
 export {
     dbReadPagos,
     dbInsertPago,
     dbUpdatePago,
-    dbDeletePago
+    dbDeletePago,
+    dbgetPagos
 }

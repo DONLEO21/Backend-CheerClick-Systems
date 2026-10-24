@@ -1,113 +1,148 @@
 import { dbCreatePlanAsociado, dbDeletePlanAsociado, dbGetPlanAsociado, dbGetPlanesAsociados, dbUpdatePlanAsociado } from "../services/planAsociado.sevices.js";
 
-const CreatePlanAsociado = async (req, res ) => {
+const CreatePlanAsociado = async (req, res) => {
     try {
         const inputData = req.body;
 
         const data = await dbCreatePlanAsociado(inputData);
-        res.json({ msg: 'Registra un plan asociado', data: data}) 
+
+        return res.status(201).json({ msg: 'Registra un plan asociado', data: data });
     } catch (error) {
+        console.error(error);
 
-        console.error(error)
-        //Verificar si el error es por duplicidad
-        if(error.code == 11000 ){
-            // console.log(error.Keyvalue);
-            // console.log(Object.keys(error.Keyvalue))
-            // console.log(Object.keys(error.KeyValue) [0])}
+        if (error.name == 'ValidationError') {
+            const errors = {};
 
-            const field = Object.keys(error.keyValue)[0];
+            for (const field in error.errors) {
+                errors[field] = error.errors[field].message;
+            }
 
-            return res.json ({
-                [field] : `El '${ field }' con el valor '${error.keyValue[ field ]}' ya se encuentra registrado` 
-            });
-
+            return res.status(400).json({ errors });
         }
 
-        res.json({ msg: 'No se puedo registrar el plan asociado'})
-        
+        if (error.code == 11000) {
+            const field = Object.keys(error.keyValue)[0];
+
+            return res.status(409).json({
+                [field]: `El '${field}' con el valor '${error.keyValue[field]}' ya se encuentra registrado`
+            });
+        }
+
+        return res.status(500).json({ msg: 'No se pudo registrar el plan asociado' });
     }
-}
+};
 
 const GetPlanAsociado = async (req, res) => {
     try {
-    
         const data = await dbGetPlanAsociado();
-        res.json({ msg: 'Consultar todos los planes asociados', data: data})
-        
-    } catch (error) {
 
-        console.error(error)
-        res.json({msg: 'No se pudo consultar los planes asociados'})
-        
-    }
-}
-
-const DeletePlanAsociado = async (req, res) => {
-    try {
-        const id = req.params.id;
-
-        const data = await dbDeletePlanAsociado( id );
-        res.json({ msg: 'Eliminar un plan asociado', data: data})
+        return res.status(200).json({ msg: 'Consultar todos los planes asociados', data: data });
     } catch (error) {
         console.error(error);
-        res.json({msg :'No se pudo eliminar el plan asociado '})
+
+        return res.status(500).json({ msg: 'No se pudo consultar los planes asociados' });
     }
-}
+};
+
+const DeletePlanAsociado = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const data = await dbDeletePlanAsociado(id);
+
+        if (!data) {
+            return res.status(404).json({ msg: 'No se encontró el plan asociado a eliminar' });
+        }
+
+        return res.status(200).json({ msg: 'Eliminar un plan asociado', data: data });
+    } catch (error) {
+        console.error(error);
+
+        if (error.name == 'CastError') {
+            return res.status(400).json({
+                msg: `Error en el formato del ID debe tener 24 caracteres el enviado tiene ${id.length}`,
+                [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`
+            });
+        }
+
+        return res.status(500).json({ msg: 'No se pudo eliminar el plan asociado' });
+    }
+};
 
 const UpdatePlanAsociado = async (req, res) => {
+    const id = req.params.id;
+
     try {
-        const id = req.params.id;
         const inputData = req.body;
 
         const data = await dbUpdatePlanAsociado(id, inputData);
 
-        res.json({ msg : 'Actualizar los campos del plan asociado ', data: data });
-    } catch (error) {
-
-        console.error(error)
-        //Verificar si el error es por duplicidad
-        if(error.code == 11000 ){
-            // console.log(error.Keyvalue);
-            // console.log(Object.keys(error.Keyvalue))
-            // console.log(Object.keys(error.KeyValue) [0])}
-
-            const field = Object.keys(error.keyValue)[0];
-
-            return res.json ({
-                msg : `Error por duplicidad en el campo '${field}'`,
-                [field] : `El '${ field }' con el valor '${error.keyValue[ field ]}' ya se encuentra registrado` 
-            });
-
+        if (!data) {
+            return res.status(404).json({ msg: 'No se encontró el plan asociado a actualizar' });
         }
 
-        res.json({ msg: 'No se puedo registrar el plan asociado'})
-        
-    }
-}
-
-const GetPlanesAsociados = async (req, res) => {
-    const id = req.params.id; 
-    try {
-        const data = await dbGetPlanesAsociados (id);
-
-        res.json({msg: 'Consultar uno de los planes por su ID', data: data});
+        return res.status(200).json({ msg: 'Actualizar los campos del plan asociado', data: data });
     } catch (error) {
-
         console.error(error);
 
-        if(error.name == 'CastError') {
-            return res.json({
-            msg: `Error en el formato del ID debe tener 24 caracteres el enviado tiene ${id.length}`, 
-            [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`});
+        if (error.name == 'ValidationError') {
+            const errors = {};
+
+            for (const field in error.errors) {
+                errors[field] = error.errors[field].message;
+            }
+
+            return res.status(400).json({ errors });
         }
+
+        if (error.name == 'CastError') {
+            return res.status(400).json({
+                msg: `Error en el formato del ID debe tener 24 caracteres el enviado tiene ${id.length}`,
+                [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`
+            });
+        }
+
+        if (error.code == 11000) {
+            const field = Object.keys(error.keyValue)[0];
+
+            return res.status(409).json({
+                [field]: `El '${field}' con el valor '${error.keyValue[field]}' ya se encuentra registrado`
+            });
+        }
+
+        return res.status(500).json({ msg: 'No se pudo actualizar el plan asociado' });
     }
-}
+};
 
+const GetPlanesAsociados = async (req, res) => {
+    const id = req.params.id;
 
- export{
+    try {
+        const data = await dbGetPlanesAsociados(id);
+
+        if (!data) {
+            return res.status(404).json({ msg: 'No se encontró el plan asociado' });
+        }
+
+        return res.status(200).json({ msg: 'Consultar uno de los planes por su ID', data: data });
+    } catch (error) {
+        console.error(error);
+
+        if (error.name == 'CastError') {
+            return res.status(400).json({
+                msg: `Error en el formato del ID debe tener 24 caracteres el enviado tiene ${id.length}`,
+                [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`
+            });
+        }
+
+        return res.status(500).json({ msg: 'No se pudo encontrar el plan asociado' });
+    }
+};
+
+export {
     CreatePlanAsociado,
     GetPlanAsociado,
     DeletePlanAsociado,
     UpdatePlanAsociado,
     GetPlanesAsociados
-}
+};

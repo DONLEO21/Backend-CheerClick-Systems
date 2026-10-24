@@ -4,7 +4,7 @@ const planAsociadoSchema = new Schema({
     nombre: {
         type: String,
         unique: true,
-        minlength:[5, 'El nombre del plan debe ser mayor a 5 caractes'],
+        minlength:[2, 'El nombre del plan debe ser mayor a 5 caractes'],
         required:[true, 'El nombre del plan es obligatorio'],
         trim: true
     },

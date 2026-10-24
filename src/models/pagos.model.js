@@ -20,12 +20,6 @@ const PagosSchema = new Schema(
         type: Date,
         required : [true, 'El la fecha de generacion del pago es obligatoria']
     },
-    responsableRegis : {
-        type: String,
-        required : [true, 'El nombre del responsable es obligatorio'],
-        trim: true,
-        maxlength: [50, 'Se supero la cantidad de caracteres']
-    },
     fechaPago : {
         type: Date
     },

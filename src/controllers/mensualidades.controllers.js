@@ -1,76 +1,127 @@
 import { dbCreateMensualidad, dbDeleteMensualidad, dbGetMensualidad, dbGetMensualidades, dbUpdateMensualidad } from "../services/mensualidades.services.js";
 
-//Constrotaldor para crear una nueva mensualidad 
-const CreateMensualidad = async (req , res) => {
+const CreateMensualidad = async (req, res) => {
     try {
-    const inputData = req.body;
+        const inputData = req.body;
 
-    //Usar el servicio para registrar 
+        const data = await dbCreateMensualidad(inputData);
 
-    const data = await dbCreateMensualidad( inputData );
-
-    res.json({msg: 'Registrar una nueva mensualidad', data: data})
+        return res.status(201).json({ msg: 'Registrar una nueva mensualidad', data: data });
     } catch (error) {
-        console.error(error); 
-        res.json({msg: 'No se pudo registrar la mensualidad'})
+        console.error(error);
+
+        if (error.name == 'ValidationError') {
+            const errors = {};
+
+            for (const field in error.errors) {
+                errors[field] = error.errors[field].message;
+            }
+
+            return res.status(400).json({ errors });
+        }
+
+        return res.status(500).json({ msg: 'Error al registrar una mensualidad' });
     }
 };
 
-//Controlador listar todas las mensualidades
-const GetMensualidad = async (req, res ) => { 
+const GetMensualidad = async (req, res) => {
     try {
         const data = await dbGetMensualidad();
 
-        res.json({msg : 'Consultar todas las mensualidades', data: data}) 
+        return res.status(200).json({ msg: 'Consultar todas las mensualidades', data: data });
     } catch (error) {
         console.error(error);
-        res.json({msg: 'No se pudo consultar las mensualidades'})
-        
+
+        return res.status(500).json({ msg: 'No se pudo consultar las mensualidades' });
     }
 };
 
-//Controlador para eliminar una de las mensualidades
 const DeleteMensualidad = async (req, res) => {
+    const id = req.params.id;
+
     try {
-        const id = req.params.id;
+        const data = await dbDeleteMensualidad(id);
 
-        const data = await dbDeleteMensualidad( id );
+        if (!data) {
+            return res.status(404).json({ msg: 'No se encontró la mensualidad a eliminar' });
+        }
 
-        res.json({msg: 'Elimina una de las mensualidades', data: data });
+        return res.status(200).json({ msg: 'Elimina una de las mensualidades', data: data });
     } catch (error) {
         console.error(error);
-        res.json({msg :'No se pudo eliminar la mensualidad '})  
-    }
-}
 
-//Controlador para actualizar los campos de la mensualidad
+        if (error.name == 'CastError') {
+            return res.status(400).json({
+                msg: `Error en el formato del ID debe tener 24 caracteres el enviado tiene ${id.length}`,
+                [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`
+            });
+        }
+
+        return res.status(500).json({ msg: 'No se pudo eliminar la mensualidad' });
+    }
+};
+
 const UpdateMensualidad = async (req, res) => {
+    const id = req.params.id;
+
     try {
-        const id = req.params.id;
         const inputData = req.body;
 
         const data = await dbUpdateMensualidad(id, inputData);
 
-        res.json({ msg : 'Actualizar los campos de la mensualidad ', data: data });
+        if (!data) {
+            return res.status(404).json({ msg: 'No se encontró la mensualidad a actualizar' });
+        }
+
+        return res.status(200).json({ msg: 'Actualizar los campos de la mensualidad', data: data });
     } catch (error) {
         console.error(error);
-        res.json({ msg : 'No se puedo actualizar los campos de la mensualidad'})
-        
+
+        if (error.name == 'ValidationError') {
+            const errors = {};
+
+            for (const field in error.errors) {
+                errors[field] = error.errors[field].message;
+            }
+
+            return res.status(400).json({ errors });
+        }
+
+        if (error.name == 'CastError') {
+            return res.status(400).json({
+                msg: `Error en el formato del ID debe tener 24 caracteres el enviado tiene ${id.length}`,
+                [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`
+            });
+        }
+
+        return res.status(500).json({ msg: 'No se pudo actualizar los campos de la mensualidad' });
     }
-}
+};
 
 const GetMensualidades = async (req, res) => {
-    try {
-        const id = req.params.id; 
-        const data = await dbGetMensualidades (id);
+    const id = req.params.id;
 
-        res.json({msg: 'Consultar una de las mesualidades por su ID', data: data});
+    try {
+        const data = await dbGetMensualidades(id);
+
+        if (!data) {
+            return res.status(404).json({ msg: 'No se encontró la mensualidad' });
+        }
+
+        return res.status(200).json({ msg: 'Consultar una de las mensualidades por su ID', data: data });
     } catch (error) {
         console.error(error);
-        res.json({msg : 'No se pudo encontrar la mensualidad'});
-    }
-}
 
+        if (error.name == 'CastError') {
+            return res.status(400).json({
+                msg: `Error en el formato del ID debe tener 24 caracteres el enviado tiene ${id.length}`,
+                [error.path]: `El identificador ${error.value} no tiene el formato valido que requiere MongoDB`
+            });
+        }
+
+        return res.status(500).json({ msg: 'No se pudo encontrar la mensualidad' });
+    }
+};
 
 export {
     CreateMensualidad,
@@ -78,4 +129,4 @@ export {
     DeleteMensualidad,
     UpdateMensualidad,
     GetMensualidades
-}
+};
