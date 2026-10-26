@@ -75,7 +75,7 @@ const updateTipoHabilidad = async (req, res) => {
     try {
         const inputData = req.body;
 
-        const data = await dbUpdateHabilidad(id, inputData);
+        const data = await dbUpdateTipoHabilidad(id, inputData);
 
         if (!data) {
             return res.status(404).json({ msg: 'No se encontró el tipo de habilidad a actualizar' });

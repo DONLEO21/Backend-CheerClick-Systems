@@ -1,4 +1,4 @@
-import { dbCreateHabilidad, dbDeleteHabilidad, dbGetHabilidades, dbUpdateHabilidad } from "../services/habilidades.services.js";
+import { dbCreateHabilidad, dbDeleteHabilidad, dbGetHabilidad, dbGetHabilidades, dbUpdateHabilidad } from "../services/habilidades.services.js";
 
 const getHabilidades = async (req, res) => {
     try {

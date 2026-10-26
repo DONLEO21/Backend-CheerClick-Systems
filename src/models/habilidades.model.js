@@ -4,7 +4,8 @@ const HabilidadesSchema = new Schema(
     {
     nombre : {
         type: String, 
-        required : [true, 'El nombre de la habilidad es obligatorio'],   
+        required : [true, 'El nombre de la habilidad es obligatorio'], 
+        unique: true,  
         trim: true   
     },
     estado : {
