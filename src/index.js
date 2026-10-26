@@ -9,6 +9,7 @@ import nivelesRoute from './routes/niveles.routes.js'
 import competenciasRoute from './routes/competencias.routes.js'
 import pqrsRoute from './routes/pqrs.routes.js'
 import respuestapqrsRoute from './routes/respuesta_pqrs.routes.js'
+import authRoute from './routes/auth.routes.js'
 
 const port = process.env.PORT || 3001;
 
@@ -31,7 +32,8 @@ app.use('/api/plantilla_horario', plantilla_horariosRoute);
 app.use('/api/niveles', nivelesRoute );
 app.use('/api/competencias', competenciasRoute);
 app.use('/api/pqrs', pqrsRoute);
-app.use('/api/respuesta_pqrs', respuestapqrsRoute)
+app.use('/api/respuesta_pqrs', respuestapqrsRoute);
+app.use('/api/auth', authRoute)
 
 
 
