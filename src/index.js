@@ -1,6 +1,7 @@
 import express from 'express';
 
 import rendimientoRoute from './routes/rendimiento.routes.js';
+import habilidadRoute from './routes/habilidades.routes.js';
 
 
 import conexion from './config/mongo.config.js' 
@@ -21,6 +22,7 @@ app.get('/health', (req, res) => {
 
 // Enlazar todas las rutas de la aplicacion
 app.use( '/api/rendimiento' , rendimientoRoute );
+app.use( '/api/habilidad', habilidadRoute)
 
 // Iniciar Servidor
 app.listen(port, () => {
