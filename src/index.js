@@ -11,6 +11,10 @@ import competenciasRoute from './routes/competencias.routes.js'
 import pqrsRoute from './routes/pqrs.routes.js'
 import respuestapqrsRoute from './routes/respuesta_pqrs.routes.js'
 import authRoute from './routes/auth.routes.js'
+import pagosRouter from './routes/pagos.routes.js'; //EsModule
+import mensualidadRouter from './routes/mensualidades.routes.js'
+import PlanAsociadoRouter from './routes/planAsociado.routes.js';
+import MetodoPagoRouter from './routes/metodosPago.routes.js';
 
 
 import conexion from './config/mongo.config.js' //Conexion a la base de datos
@@ -28,10 +32,12 @@ app.use(express.json());
 //Definiendo el primer endpoint (Ruta de entrada) 
 app.get('/health', (req, res) => {
     res.status(200).json({msg : 'Servidor de CheerClick esta funcionando!'})
-
 });
 
+
+
 //Enlazar todas las rutas de la aplicacion 
+
 app.use( '/api/usuarios' , usuariosRoute );
 app.use( '/api/eps' ,  epsRoute)
 app.use( '/api/contactoEmergencia' , contactoEmergenciaRoute)
@@ -44,8 +50,13 @@ app.use('/api/pqrs', pqrsRoute);
 app.use('/api/respuesta_pqrs', respuestapqrsRoute);
 app.use('/api/auth', authRoute)
 
-
 // Iniciar Servidor
+app.use( '/api/pagos' , pagosRouter );
+app.use( '/api/mensualidades', mensualidadRouter);
+app.use( '/api/plan-asociado', PlanAsociadoRouter);
+app.use( '/api/metodo-pago', MetodoPagoRouter)
+
+//Iniciar servidor 
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });

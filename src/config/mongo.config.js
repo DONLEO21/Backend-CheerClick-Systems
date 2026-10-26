@@ -1,20 +1,21 @@
 
-// mongoose.createConnection('mongodb://127.0.0.1:27017/test'
-// ODM:
+//ODM: 
 import mongoose from "mongoose";
 
-const URI_MONGO = process.env.URI_MONGO || 'mongodb://localhost:27017/';
+const URI_MONGO =process.env.URI_MONGO || 'mongodb://localhost:27017/db-CheerClick';
 
-//Sequelize (SQL) -> MySQL, PotgreSQL, MariaDb, SQLite
-//Prisma (SQL, NoSQL) -> MySQL, PotgreSQL, MariaDb, SQLite
+//sequelize (SQL)
+// Prisma (SQL, NoSQL)
 
 const conexion = async () => {
     try {
-        await mongoose.connect(URI_MONGO)
-        console.log ('Conectado a la base de datos MongoDB')
+        await mongoose.connect(URI_MONGO)    
+        console.log ('Conectado a la bases de datos de MongoDB')    
     } catch (error) {
-        console.error ('Error al conectar a la base de datos:', error);
-
+        console.error('Error al conectar a la base de datos:' , error)
     }
+ 
 }
-export default conexion;
+
+export default conexion; 
+
