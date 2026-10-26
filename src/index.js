@@ -4,6 +4,13 @@ import express from 'express';//EsModule
 import usuariosRoute from './routes/usuarios.routes.js'; //EsModule_
 import epsRoute from './routes/eps.routes.js';
 import contactoEmergenciaRoute from './routes/contactoEmergencia.routes.js'
+import horariosRoute from './routes/horarios.routes.js';
+import plantilla_horariosRoute from './routes/plantilla_horarios.routes.js'
+import nivelesRoute from './routes/niveles.routes.js'
+import competenciasRoute from './routes/competencias.routes.js'
+import pqrsRoute from './routes/pqrs.routes.js'
+import respuestapqrsRoute from './routes/respuesta_pqrs.routes.js'
+import authRoute from './routes/auth.routes.js'
 
 
 import conexion from './config/mongo.config.js' //Conexion a la base de datos
@@ -28,7 +35,17 @@ app.get('/health', (req, res) => {
 app.use( '/api/usuarios' , usuariosRoute );
 app.use( '/api/eps' ,  epsRoute)
 app.use( '/api/contactoEmergencia' , contactoEmergenciaRoute)
+// Enlazar todas las rutas de la aplicacion
+app.use('/api/horarios', horariosRoute);
+app.use('/api/plantilla_horario', plantilla_horariosRoute);
+app.use('/api/niveles', nivelesRoute );
+app.use('/api/competencias', competenciasRoute);
+app.use('/api/pqrs', pqrsRoute);
+app.use('/api/respuesta_pqrs', respuestapqrsRoute);
+app.use('/api/auth', authRoute)
 
+
+// Iniciar Servidor
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
