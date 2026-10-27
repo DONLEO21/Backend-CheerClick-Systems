@@ -16,9 +16,14 @@ const dbUpdateUsuario = () => {}
 
 const dbDeleteUsuario = () => {}
 
+const dbGetUserByEmail = async ( email ) => {
+    return await usuarioModel.findOne({ email: email });
+}
+
 export {
     dbCreateUsuario,
     dbGetUsuario,
     dbUpdateUsuario,
-    dbDeleteUsuario
+    dbDeleteUsuario,
+    dbGetUserByEmail
 }
