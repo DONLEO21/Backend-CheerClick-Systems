@@ -24,9 +24,14 @@ const dbDeleteUsuario = async (id) => {
     return await usuarioModel.findOneAndDelete({_id: id})
 }
 
+const dbGetUserByEmail = async ( email ) => {
+    return await usuarioModel.findOne({ email: email });
+}
+
 export {
     dbCreateUsuario,
     dbGetUsuario,
     dbUpdateUsuario,
-    dbDeleteUsuario
+    dbDeleteUsuario,
+    dbGetUserByEmail
 }

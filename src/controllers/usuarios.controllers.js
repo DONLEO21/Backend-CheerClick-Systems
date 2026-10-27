@@ -1,4 +1,8 @@
+
 import { dbCreateUsuario, dbGetUsuario, dbUpdateUsuario, dbDeleteUsuario } from "../services/usuarios.services.js"
+import { generarPassword } from "../helpers/bcrypt.helpers.js";
+import { dbCreateUsuario, dbGetUsuario } from "../services/usuarios.services.js"
+
 
 //Controlador define quien hace una accion especifica
 const getUsuario = async (req, res) => {
@@ -32,6 +36,8 @@ const createUsuario = async (req, res) => {
     
         //obtenemos el usuario desde le cuerpo de la peticion (Request)
         const usuario = req.body;
+
+         usuario.contrasena = generarPassword(usuario.contrasena);
 
         const newUsuario = await dbCreateUsuario(usuario);      //Llega como una Promesa (Promise)
 
