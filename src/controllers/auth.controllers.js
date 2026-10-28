@@ -48,6 +48,7 @@ const loginUser = async ( req, res ) => {
         apellido: userFound.apellido,
         email: userFound.email,
         rol: userFound.rol,
+        status: userFound.status
     }
    const token = generateToken(payload)
 
@@ -66,9 +67,22 @@ const loginUser = async ( req, res ) => {
 
 
 const verifyAuthenticate = ( req, res ) => {
+     const data = req.holaatodos;
+     console.log('::::', data)
+    console.log('Soy el controlador de Autenticaction');
     res.json({
         msg: 'Verifica y actualiza las credenciales del usuario'
     });
+
+    // const newPayload = {
+    //     _id:userFound._id ,
+    //     nombre: userFound.nombre ,
+    //     apellido: userFound.apellido,
+    //     email: userFound.email,
+    //     rol: userFound.rol,
+    //     status: userFound.status
+    // }
+    // const token = generateToken(newPayload);
 }
 
 

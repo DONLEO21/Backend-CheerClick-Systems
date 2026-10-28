@@ -1,6 +1,8 @@
 import { Router } from "express";
 import {createUsuario} from '../controllers/usuarios.controllers.js'
 import { loginUser, verifyAuthenticate } from "../controllers/auth.controllers.js";
+import { authMiddleware } from "../middlewares/authenticate.middlewares.js";
+import { authorizationMiddleware } from "../middlewares/authorizationMiddleware.middleware.js";
 
 const router = Router();
 
@@ -17,10 +19,10 @@ router.post( '/register', createUsuario);
 router.post( '/login', loginUser );
 
 // 3. Renovación de Credenciales (Token)
-router.get( '/renew-token', verifyAuthenticate );
+router.get( '/renew-token', authMiddleware, verifyAuthenticate );
 
 // Investigarrr
 // 4. Recuperar Contraseña
-// 5. Habilitar cuenta resgitrada publicamente
+// 5. Habilitar cuenta regustrada publicamente
 
 export default router;
