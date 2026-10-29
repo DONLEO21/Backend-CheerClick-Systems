@@ -3,6 +3,7 @@ import {createUsuario} from '../controllers/usuarios.controllers.js'
 import { loginUser, verifyAuthenticate } from "../controllers/auth.controllers.js";
 import { authMiddleware } from "../middlewares/authenticate.middlewares.js";
 import { authorizationMiddleware } from "../middlewares/authorizationMiddleware.middleware.js";
+import { withRoleMiddleware } from "../middlewares/withrout.middleware.js";
 
 const router = Router();
 
@@ -13,7 +14,7 @@ const router = Router();
 
 
 // 1. Registro publico de usuarios (default: CUSTOMER) Middleware asegurarme que solo se registre CUSTOMER
-router.post( '/register', createUsuario);     
+router.post( '/register', withRoleMiddleware, createUsuario);     
 
 // 2. Login de usuarios
 router.post( '/login', loginUser );
