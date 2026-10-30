@@ -7,7 +7,7 @@ import { authorizationMiddleware } from "../middlewares/authorizationMiddleware.
 const router = Router();
 
 router.get('/', authMiddleware, getCompetencia);
-router.post('/', authMiddleware, authorizationMiddleware, createCompetencia)
+router.post('/', [authMiddleware, authorizationMiddleware (['Administrador'])], createCompetencia)
 router.delete('/:id', authMiddleware, authorizationMiddleware, deleteCompetencia)
 router.patch('/:id', authMiddleware, updateCompetencia )
 router.get('/:id', authMiddleware,  getCompetencias )
