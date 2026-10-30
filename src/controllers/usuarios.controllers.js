@@ -1,8 +1,6 @@
 
 import { dbCreateUsuario, dbGetUsuario, dbUpdateUsuario, dbDeleteUsuario } from "../services/usuarios.services.js"
 import { generarPassword } from "../helpers/bcrypt.helpers.js";
-import { dbCreateUsuario, dbGetUsuario } from "../services/usuarios.services.js"
-
 
 //Controlador define quien hace una accion especifica
 const getUsuario = async (req, res) => {
@@ -33,11 +31,18 @@ const getUsuario = async (req, res) => {
 }
 const createUsuario = async (req, res) => {
     try {
-    
-        //obtenemos el usuario desde le cuerpo de la peticion (Request)
-        const usuario = req.body;
+        //Extraer el _id del userFound usando una desestructuracion del payload qu envia en el req con l peticion el Middlewar de Aunticacion
+        const userFound = req.userFound
 
-         usuario.contrasena = generarPassword(usuario.contrasena);
+        // Usa un operador ternario para asignar el valor de _id a la variable id, o null si no existe 
+        const id = userFound._id ? userFound._id : null;
+
+        // Extrae los datos del cuerpo de la peticion
+        const usuario = req.body;
+        usuario.createdBy =  id; 
+
+        //Encripta la contraseña antes de guardarla en la base de datos (opcional, pero recomendado)
+        usuario.contrasena = generarPassword(usuario.contrasena);
 
         const newUsuario = await dbCreateUsuario(usuario);      //Llega como una Promesa (Promise)
 

@@ -1,12 +1,14 @@
 import { Router } from 'express';
 import { getUsuario, createUsuario, updateUsuario, deleteUsuario } from '../controllers/usuarios.controllers.js';
+import { authorizationMiddleware } from '../middlewares/authorizationMiddleware.middleware.js'
+import { authMiddleware} from '../middlewares/authenticate.middlewares.js'
 
 const router = Router();
 
 // Definicion de las rutas para usuarios
 
 router.get('/:id', getUsuario);
-router.post('/', createUsuario);
+router.post('/', [ authMiddleware , authorizationMiddleware], createUsuario);
 router.patch('/:id', updateUsuario);
 router.delete('/:id', deleteUsuario);
 

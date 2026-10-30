@@ -2,7 +2,12 @@ import { dbCreatePerfilUsuario, dbGetPerfilUsuario, dbUpdatePerfilUsuario, dbDel
 
 const createPerfilUsuario = async (req, res) => {
     try {
+
+        const user_id = req.userFound._id;
+
         const perfilUsuario = req.body;
+        perfilUsuario.perteneceA = user_id;
+
         const newPerfilUsuario = await dbCreatePerfilUsuario(perfilUsuario);
 
         res.json ({

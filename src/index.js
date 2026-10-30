@@ -5,6 +5,7 @@ import usuariosRoute from './routes/usuarios.routes.js'; //EsModule_
 import epsRoute from './routes/eps.routes.js';
 import contactoEmergenciaRoute from './routes/contactoEmergencia.routes.js'
 import perfilUsuarioRoute from './routes/perfilUsuario.routes.js'
+import authRoute from './routes/auth.routes.js'
 
 
 import conexion from './config/mongo.config.js' //Conexion a la base de datos
@@ -30,6 +31,7 @@ app.use( '/api/usuarios' , usuariosRoute );
 app.use( '/api/eps' ,  epsRoute);
 app.use( '/api/contactoemergencia' , contactoEmergenciaRoute);
 app.use( '/api/perfilusuario' , perfilUsuarioRoute) ;
+app.use( '/api/auth' , authRoute)
 
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);

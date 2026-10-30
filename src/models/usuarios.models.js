@@ -31,7 +31,7 @@ const usuarioSchema = new Schema({
     createdBy : {
         type : Schema.Types.ObjectId,
         ref : 'usuario',
-        required: false 
+        required: false
     },
     eps : {
         type : Schema.Types.ObjectId,
