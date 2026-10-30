@@ -35,7 +35,7 @@ const authMiddleware = async (req, res, next) => {
         res.json({msg: 'El usuario no esta Activo o el usuario no esta registrado en el sistema'})
     }
 
-    req.holaatodos = 'Holaaa terricolas'
+    req.userFound = userFound
 
     console.log('userFound', userFound);
     next();

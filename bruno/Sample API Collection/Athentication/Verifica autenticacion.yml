@@ -6,6 +6,9 @@ info:
 http:
   method: GET
   url: http://localhost:3000/api/auth/renew-token
+  headers:
+    - name: X-Token
+      value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YWUyMmE3NzMwMjhlMjMwNTVlN2FjYjMiLCJub21icmUiOiJMZW9uYXJkbyIsImFwZWxsaWRvIjoiTW9yYWxlcyIsImVtYWlsIjoiTGVvbmFyZG9AZ21haWwuY29tIiwicm9sIjoiQXRsZXRhIiwiaWF0IjoxNzkzMjA5Mjk3LCJleHAiOjE3OTMyMjcyOTd9.1FKM8Zeck05b9XvRXu0WzUbFLafq1oTvKXUPY-UY2E8
   body:
     type: json
     data: |-

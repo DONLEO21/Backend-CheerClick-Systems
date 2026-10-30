@@ -4,7 +4,9 @@ import { dbGetUserByEmail } from "../services/usuarios.services.js";
 import { generateToken } from "../helpers/jwt.helpers.js";
 
 const loginUser = async ( req, res ) => {
-    // Paso 1: Obtener las credenciales del usuario { email: '...', password: '...' }
+
+    try {
+        // Paso 1: Obtener las credenciales del usuario { email: '...', password: '...' }
     const inputData = req.body;
 
     // Valida si el campo email NO viene dentro de las inputData
@@ -63,26 +65,42 @@ const loginUser = async ( req, res ) => {
     res.json({
         msg: 'Login de usuario', token: token, data: jsonObj
     });
+        
+    } catch (error) {
+        console.error(error);
+        res.json({msg: 'No se pudo autenticar el usuario'})
+        
+    }
 }
 
 
 const verifyAuthenticate = ( req, res ) => {
-     const data = req.holaatodos;
-     console.log('::::', data)
-    console.log('Soy el controlador de Autenticaction');
-    res.json({
-        msg: 'Verifica y actualiza las credenciales del usuario'
-    });
 
-    // const newPayload = {
-    //     _id:userFound._id ,
-    //     nombre: userFound.nombre ,
-    //     apellido: userFound.apellido,
-    //     email: userFound.email,
-    //     rol: userFound.rol,
-    //     status: userFound.status
-    // }
-    // const token = generateToken(newPayload);
+    try {
+    const userFound = req.userFound;
+
+    const newPayload = {
+        _id:userFound._id ,
+        nombre: userFound.nombre ,
+        apellido: userFound.apellido,
+        email: userFound.email,
+        rol: userFound.rol,
+        status: userFound.status
+    }
+    const newToken = generateToken(newPayload);
+
+    // Paso 3: Eliminar las propiedades sensiblesdel objeto retornado al usuario
+    const jsOb =userFound.toObject();  // Convierte un BJSON en un objeto JavaScript
+    delete jsOb.contrasena;            // Elimina el campo contrasena del Objeto que retornamos al usuario
+
+   res.json({msg: 'Autenticidad de Token verficada con exito', token: newToken, data: jsOb})
+        
+    } catch (error) {
+        console.error(error);
+        res.json({msg: 'No se pudo verificar la autenticidad de las credenciales'});
+        
+    }
+
 }
 
 
