@@ -17,7 +17,14 @@ const getCompetencia = async (req, res) => {
 
 const createCompetencia = async (req, res) => {
     try {
+        // Extrae el ID del usuario encontrado por el Middleware de Autentication
+
+       const { _id} = req.userFound;
+
+
+        // Extare los datos del cuerpo de la peticion
         const inputData = req.body;
+        inputData.createBy = _id; // <---- Agrega el ID del usuario que registra la competencia
 
         const data = await dbCreateCompetencia(inputData);
 
@@ -50,10 +57,12 @@ const createCompetencia = async (req, res) => {
 
 const deleteCompetencia = async (req, res) => {
     const id = req.params.id;
+     const user_id = req.userFound._id;
     try {
     const data = await dbDeleteCompetencia( id );
 
-    res.json({ msg : 'Elimina una plantilla de horarios', data: data });
+
+    res.json({ msg : 'Elimina una plantilla de horarios', data: data , deleteBy: user_id});
         
     } catch (error) {
         console.error(error);

@@ -6,6 +6,9 @@ info:
 http:
   method: GET
   url: http://localhost:3000/api/inscripciones_competencias
+  headers:
+    - name: X-Token
+      value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YWUzN2Y3MGZjZmI2YWExMmQ5ODNkMzYiLCJub21icmUiOiJBbmRyw6lzIEZlbGlwZSIsImFwZWxsaWRvIjoiR8OzbWV6IiwiZW1haWwiOiJhbmRyZXMuYWRtaW5AZW1haWwuY29tIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsInN0YXR1cyI6dHJ1ZSwiaWF0IjoxNzkzMjk0MjAyLCJleHAiOjE3OTMzMTIyMDJ9.kTRB30gDs-R_8BlkO9K5D_nuCRCHfSpwRQBnyx6w5qI
   auth: inherit
 
 settings:

@@ -30,9 +30,15 @@ const getUsuario = async (req, res) => {
 }
 const createUsuario = async (req, res) => {
     try {
+        const userFound = req.userFound;
+
+
+        // Usa un operador ternario para asignar el valor de _id a la variable id o null si no existe
+       const id = userFound?._id || null;
     
         //obtenemos el usuario desde le cuerpó de la peticion (Request)
         const usuario = req.body;
+        usuario.createBy = id;
 
          usuario.contrasena = generarPassword(usuario.contrasena);
 
